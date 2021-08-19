@@ -116,6 +116,10 @@ const PlayGround = () => {
                   playingCards[i][length - 1].showFront = true;
                 }
                 setCards(playingCards);
+                //Incerement collected decs count
+                collectedDecsRef.current.setDeckAsCollected();
+                //Update score
+                scoreBoardRef.current.updateUserScore(10);
               } else {
                 counter = 0;
               }

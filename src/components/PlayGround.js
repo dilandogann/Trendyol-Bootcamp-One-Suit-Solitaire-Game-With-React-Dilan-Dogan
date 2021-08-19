@@ -43,6 +43,9 @@ const PlayGround = () => {
 
     const classes = useStyles();
 
+    const collectedDecsRef = useRef();
+    const scoreBoardRef= useRef();
+
     useEffect(() => {
         const { playingCards, floorCards } = initializeCards();
         setCards(playingCards);
@@ -57,8 +60,33 @@ const PlayGround = () => {
         }
         setCards(() => [...prevCards]);
     };
+    const addCardToBoard = (chunkIndex, cardIndex, droppedChunkIndex) => {
+        let movingCards = [];
+        const updatedCards = [...cards];
+        let droppedChunkLength = cards[droppedChunkIndex].length;
+    
+        //If chunk is empty or  last card of the dropped chunk's next value is equal to first card of moving cards value,push items to dropped chunk
+        if(droppedChunkLength === 0 || ( cards[chunkIndex][cardIndex].value === cards[droppedChunkIndex][droppedChunkLength - 1].nextValue )){
+          let movingChunkLength = cards[chunkIndex].length;
+          for (let i = cardIndex; i < movingChunkLength; i++) {
+            movingCards.push(cards[chunkIndex][i]);
+          }
+          updatedCards[droppedChunkIndex].push(...movingCards);
+    
+          // Delete the dragged element from its original position.
+          updatedCards[chunkIndex].splice(cardIndex, movingCards.length);
+          //Make last card of the movingChunk showFront true
+          if (updatedCards[chunkIndex].length > 0) {
+            updatedCards[chunkIndex][cardIndex - 1].showFront = true;
+          }
+          //Update cards state
+          setCards(updatedCards);
+          //Update collected chunk count
+          collectedDecsRef.current.setDeckAsCollected();
+        }
+      };
 
-    const collectedDecsRef = useRef();
+
 
     return (
         <Container maxWidth='lg'>

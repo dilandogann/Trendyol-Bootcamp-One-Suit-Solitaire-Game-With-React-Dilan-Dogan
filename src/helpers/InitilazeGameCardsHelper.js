@@ -17,6 +17,10 @@ export const initializeCards = () => {
     const shuffledCards = _.shuffle(cards);
     cards = shuffledCards;
 
+    getRandomPlayGroundCards();
+
+    getRemainingFloorCards();
+
   return { playingCards, floorCards };
 
 };
@@ -29,3 +33,25 @@ const createPlayingCard = () => {
 
   cards.push(...initialCards);
 };
+
+const getRandomPlayGroundCards = () => {
+    // lower and upper bounds
+    let lower = 0;
+    let upper = 103;
+  
+    let randomIndexes = [];
+  
+    // Calculating 54 random values in range 0 and 103
+    while (playingCards.length !== 54) {
+      let randomNum = _.random(lower, upper);
+      if (randomIndexes.includes(randomNum)) continue;
+      playingCards.push(cards[randomNum]);
+      randomIndexes.push(randomNum);
+    }
+  };
+
+  const getRemainingFloorCards = () => {
+    floorCards = cards.filter((card) =>
+      playingCards.every((playingCard) => playingCard.id !== card.id)
+    );
+  };

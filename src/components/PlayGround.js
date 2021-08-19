@@ -83,6 +83,8 @@ const PlayGround = () => {
           setCards(updatedCards);
           //Update collected chunk count
           collectedDecsRef.current.setDeckAsCollected();
+          //Update user score
+          scoreBoardRef.current.updateUserScore(10);
         }
       };
 
@@ -92,7 +94,7 @@ const PlayGround = () => {
         <Container maxWidth='lg'>
             <Grid>
                 <Timer />
-                <ScoreBoard />
+                <ScoreBoard ref={scoreBoardRef}/>
             </Grid>
             <Grid
                 style={{ marginTop: '100px' }}

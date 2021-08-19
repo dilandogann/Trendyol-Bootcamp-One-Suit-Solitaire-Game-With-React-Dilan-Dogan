@@ -85,10 +85,46 @@ const PlayGround = () => {
           collectedDecsRef.current.setDeckAsCollected();
           //Update user score
           scoreBoardRef.current.updateUserScore(10);
+          //Check for completed decs
+          checkForCompletedDecs();
         }
       };
 
 
+      const checkForCompletedDecs = () => {
+        let counter = 0;
+        const playingCards = [...cards];
+        for (let i = 0; i < playingCards.length; i++) {
+          for (let k = 0; k < playingCards[i].length; k++) {
+            if (playingCards[i][k].value === 'A') {
+              let index = k;
+              while (index !== playingCards[i].length - 1) {
+                if (
+                  playingCards[i][index].nextValue ===
+                  playingCards[i][index + 1].value
+                ) {
+                  counter++;
+                  index++;
+                } else {
+                  counter = 0;
+                  break;
+                }
+              }
+              if (counter === 12 && index === playingCards[i].length - 1) {
+                playingCards[i].splice(k, 13);
+                const length = playingCards[i].length;
+                //If its not an empty suit
+                if (length > 0) {
+                  playingCards[i][length - 1].showFront = true;
+                }
+                setCards(playingCards);
+              } else {
+                counter = 0;
+              }
+            }
+          }
+        }
+      };
 
     return (
         <Container maxWidth='lg'>

@@ -81,8 +81,6 @@ const PlayGround = () => {
           }
           //Update cards state
           setCards(updatedCards);
-          //Update collected chunk count
-          collectedDecsRef.current.setDeckAsCollected();
           //Update user score
           scoreBoardRef.current.updateUserScore(10);
           //Check for completed decs

@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import Card from '../Card';
 import CardValues from '../CardValues';
 
@@ -11,6 +12,11 @@ export const initializeCards = () => {
   for (let i = 0; i < 8; i++) {
     createPlayingCard();
   }
+
+    //shufle cards array
+    const shuffledCards = _.shuffle(cards);
+    cards = shuffledCards;
+
   return { playingCards, floorCards };
 
 };

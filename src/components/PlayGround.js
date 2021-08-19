@@ -1,29 +1,86 @@
 import { Container, Grid } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
+import { makeStyles } from '@material-ui/core';
 import { initializeCards } from '../game/useLogic';
 import Timer from './Timer';
 import ScoreBoard from './ScoreBoard';
+import FloorCards from '../../../solitare/src/components/FloorCards';
 
+const useStyles = makeStyles((theme) => ({
+    container: {
+        marginTop: 35,
+    },
+    floorAndCollectedContainer: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexWrap: 'no-wrap',
+        [theme.breakpoints.down('sm')]: {
+            flexDirection: 'column'
+        },
+    },
+    newDeck: {
+        cursor: 'pointer',
+        transition: 'all 0.2s ease-in-out',
+        // marginLeft:20,
+        '&:hover': {
+            transform: 'scaleY(1.05)',
+        },
+    },
+}));
 
 const PlayGround = () => {
 
     const [cards, setCards] = useState([]);
     const [floorCards, setFloorCards] = useState([]);
 
+    const classes = useStyles();
+
     useEffect(() => {
         const { playingCards, floorCards } = initializeCards();
         setCards(playingCards);
         setFloorCards(floorCards);
-      }, []);
+    }, []);
 
-  return (
-    <Container maxWidth='lg'>
-      <Grid>
-        <Timer/>
-        <ScoreBoard/>
-      </Grid>
-    </Container>
-  );
+    const dealFloorCards = (dealingCards) => {
+        const prevCards = cards;
+        for (let i = 0; i < 10; i++) {
+            dealingCards[i].showFront = true;
+            prevCards[i].push(dealingCards[i]);
+        }
+        setCards(() => [...prevCards]);
+    };
+
+    return (
+        <Container maxWidth='lg'>
+            <Grid>
+                <Timer />
+                <ScoreBoard />
+            </Grid>
+            <Grid
+                style={{ marginTop: '100px' }}
+                container
+                className={classes.floorAndCollectedContainer}
+                spacing={6}
+            >
+                <div>
+                    <Grid
+                        item
+                        xs={12}
+                        md={3}
+                        className={classes.newDeck}
+                        style={{ display: 'flex' }}
+                    >
+                        <FloorCards
+                            floorCards={floorCards}
+                            dealFloorCards={dealFloorCards}
+                            setFloorCards={setFloorCards}
+                        />
+                    </Grid>
+                </div>
+            </Grid>
+        </Container>
+    );
 };
 
 export default PlayGround;

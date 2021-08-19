@@ -23,6 +23,8 @@ export const initializeCards = () => {
 
     chunkPlayingCards();
 
+    showFrontSideOfLastCardsInChunks();
+
   return { playingCards, floorCards };
 
 };
@@ -69,5 +71,12 @@ const getRandomPlayGroundCards = () => {
     playingCards = _.chunk(playingCards, 5); // 5 group of 20
     for (let i = 0; i < overflowingItems.length; i++) {
       playingCards[i].push(overflowingItems[i]);
+    }
+  };
+  //Set showFront property of last items as true to show carts
+  const showFrontSideOfLastCardsInChunks = () => {
+    for (let i = 0; i < playingCards.length; i++) {
+      const length = playingCards[i].length;
+      playingCards[i][length - 1].showFront = true;
     }
   };

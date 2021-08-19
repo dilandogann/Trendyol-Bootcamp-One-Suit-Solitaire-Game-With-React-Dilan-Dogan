@@ -21,6 +21,8 @@ export const initializeCards = () => {
 
     getRemainingFloorCards();
 
+    chunkPlayingCards();
+
   return { playingCards, floorCards };
 
 };
@@ -51,7 +53,21 @@ const getRandomPlayGroundCards = () => {
   };
 
   const getRemainingFloorCards = () => {
+    //Choose cards different then playing cards
     floorCards = cards.filter((card) =>
       playingCards.every((playingCard) => playingCard.id !== card.id)
     );
+  };
+
+  //Creating 6-6-6-6-5-5-5-5-5-5 chunk of cards
+  const chunkPlayingCards = () => {
+    const overflowingItems = playingCards.slice(-4); // first 100
+    playingCards = playingCards.slice(
+      0,
+      playingCards.length - 4
+    );
+    playingCards = _.chunk(playingCards, 5); // 5 group of 20
+    for (let i = 0; i < overflowingItems.length; i++) {
+      playingCards[i].push(overflowingItems[i]);
+    }
   };

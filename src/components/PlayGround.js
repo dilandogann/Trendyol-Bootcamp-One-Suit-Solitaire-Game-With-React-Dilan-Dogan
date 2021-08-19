@@ -1,10 +1,11 @@
 import { Container, Grid } from '@material-ui/core';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { initializeCards } from '../game/useLogic';
 import Timer from './Timer';
 import ScoreBoard from './ScoreBoard';
 import FloorCards from '../../../solitare/src/components/FloorCards';
+import CollectedDecs from '../../../solitare/src/components/CollectedDecs';
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -22,11 +23,17 @@ const useStyles = makeStyles((theme) => ({
     newDeck: {
         cursor: 'pointer',
         transition: 'all 0.2s ease-in-out',
-        // marginLeft:20,
         '&:hover': {
             transform: 'scaleY(1.05)',
         },
     },
+    collectedDecsGrid: {
+        display: 'flex',
+        flexWrap: 'no-wrap',
+        [theme.breakpoints.up('md')]: {
+          marginLeft: 'auto',
+        },
+      },
 }));
 
 const PlayGround = () => {
@@ -50,6 +57,8 @@ const PlayGround = () => {
         }
         setCards(() => [...prevCards]);
     };
+
+    const collectedDecsRef = useRef();
 
     return (
         <Container maxWidth='lg'>
@@ -76,6 +85,11 @@ const PlayGround = () => {
                             dealFloorCards={dealFloorCards}
                             setFloorCards={setFloorCards}
                         />
+                    </Grid>
+                </div>
+                <div>
+                    <Grid item xs={12} md={9} className={classes.collectedDecsGrid}>
+                        <CollectedDecs ref={collectedDecsRef} />
                     </Grid>
                 </div>
             </Grid>

@@ -71,6 +71,7 @@ const PlayingCard = ({ chunk , chunkIndex}) => {
           container
           direction='column'
           className={classes.container}
+          ref={drop}
         >
           <CardPlaceHolder />
         </Grid>}

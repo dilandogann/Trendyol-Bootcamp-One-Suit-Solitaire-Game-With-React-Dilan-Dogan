@@ -2,7 +2,11 @@
   "name": "solitare",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "15.x"
+  },
   "dependencies": {
+    "@heroku/buildpack-registry": "^1.0.1",
     "@material-ui/core": "^4.12.3",
     "@material-ui/lab": "^4.0.0-alpha.60",
     "@testing-library/jest-dom": "^5.14.1",
@@ -12,7 +16,7 @@
     "react-dnd": "^14.0.3",
     "react-dnd-html5-backend": "^14.0.1",
     "react-dom": "^17.0.2",
-    "react-scripts": "^1.1.5",
+    "react-scripts": "^4.0.3",
     "uuid": "^8.3.2",
     "web-vitals": "^1.1.2"
   },

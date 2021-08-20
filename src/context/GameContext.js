@@ -8,11 +8,9 @@ export const GameContext = createContext();
 export const GameContextProvider = ({ children }) => {
 
     const [cards, setCards] = useState([]);
-    const [prevStates, setPrevState] = useState([]);
     const [floorCards, setFloorCards] = useState([]);
     const [collectedDecsCount, setCollectedDecsCount] = useState(0);
-    const [commonError, setCommonError] = useState({ show: false, message: "" });
-    console.log(commonError)
+    const [prevMoves, setPrevMoves] = useState([]);
 
     const scoreBoardRef = useRef();
 
@@ -30,10 +28,12 @@ export const GameContextProvider = ({ children }) => {
 
         //If last card of the dropped chunk's next value is equal to first card of moving cards value,push items to dropped chunk
         if (droppedChunkLength === 0 || (cards[chunkIndex][cardIndex].value === cards[droppedChunkIndex][droppedChunkLength - 1].nextValue)) {
+           
+            //Set the move to moves state 
             let movingChunkLength = cards[chunkIndex].length;
             const movingItemsLength = movingChunkLength - cardIndex + 1
-            setMove(movingItemsLength, chunkIndex, cardIndex, droppedChunkIndex)
-
+            setPrevMove(movingItemsLength, chunkIndex, droppedChunkIndex)
+            
             for (let i = cardIndex; i < movingChunkLength; i++) {
                 movingCards.push(cards[chunkIndex][i]);
             }
@@ -93,60 +93,12 @@ export const GameContextProvider = ({ children }) => {
         }
     };
 
-    //If there is any empty suit,dont deal floor cards
-    const emptySuitExists = () => {
-        for (let i = 0; i < cards.length; i++) {
-            if (cards[i].length === 0)
-                return true
-        }
-        return false
-    }
-
-    const setMove = (itemLength, movingChunkIndex, movedChunkIndex) => {
-        const prevStateArr = [...prevStates]
+    const setPrevMove = (itemLength, movingChunkIndex, movedChunkIndex) => {
+        const prevStateArr = [...prevMoves]
         const move = { itemLength: itemLength, movedChunkIndex: movedChunkIndex, movingChunkIndex: movingChunkIndex }
         prevStateArr.push(move)
-        setPrevState(prevStateArr)
+        setPrevMoves(prevStateArr)
     }
-
-    //When user clicked to revoke button,set state to prev state
-    const revokeBack = () => {
-
-        const prevStateArr = [...prevStates]
-        if (prevStateArr.length > 0) {
-            const lastMove = prevStateArr.pop()
-            setPrevState(prevStateArr)
-            const prevCards = [...cards]
-            for (let i = 0; i < lastMove.itemLength; i++) {
-                prevCards[lastMove.movedChunkIndex].push(prevCards[lastMove.movingChunkIndex].pop())
-            }
-            setCards(prevCards)
-        }
-    }
-
-    const trick = () => {
-        // if you want to be more clever...
-        for (let i = 0; i < cards.length; i++) {
-            
-        } 
-        // let result = result1.filter(o1 => result2.some(o2 => o1.id === o2.id));
-        for (let i = 0; i < cards.length; i++) {
-            const length = cards[i].length
-            if (length > 0) {
-                const item = cards[i][length - 1]
-                if (item.nextValue !== null) {
-                    const nextValue=  item.nextValue  
-                    for(let k =0 ;k< 10;k++){
-                        if(k === i) continue
-                        let lastItem = cards[k][cards[k].length-1]
-                        if(lastItem){
-
-                        }
-                    }     
-                }
-            }
-        }
-    };
 
     return (
         <GameContext.Provider
@@ -154,13 +106,10 @@ export const GameContextProvider = ({ children }) => {
                 cards,
                 floorCards,
                 collectedDecsCount,
-                commonError,
                 setCards,
                 setFloorCards,
                 addCardToBoard,
                 checkForCompletedDecs,
-                emptySuitExists,
-                setCommonError,
                 scoreBoardRef
             }}
         >

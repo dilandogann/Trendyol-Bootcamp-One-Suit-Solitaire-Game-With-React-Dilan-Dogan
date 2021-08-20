@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import spadesBack from '../assets/spades-back.png';
 import { GameContext } from '../context/GameContext';
 

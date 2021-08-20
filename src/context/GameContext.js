@@ -11,6 +11,7 @@ export const GameContextProvider = ({ children }) => {
     const [floorCards, setFloorCards] = useState([]);
     const [collectedDecsCount, setCollectedDecsCount] = useState(0);
     const [prevMoves, setPrevMoves] = useState([]);
+    const [commonError, setCommonError] = useState({ show: false, message: "" });
 
     const scoreBoardRef = useRef();
 
@@ -106,10 +107,12 @@ export const GameContextProvider = ({ children }) => {
                 cards,
                 floorCards,
                 collectedDecsCount,
+                commonError,
                 setCards,
                 setFloorCards,
                 addCardToBoard,
                 checkForCompletedDecs,
+                setCommonError,
                 scoreBoardRef
             }}
         >

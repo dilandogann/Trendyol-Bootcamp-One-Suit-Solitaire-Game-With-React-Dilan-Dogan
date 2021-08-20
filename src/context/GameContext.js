@@ -42,14 +42,18 @@ export const GameContextProvider = ({ children }) => {
 
             // Delete the dragged element from its original position.
             updatedCards[chunkIndex].splice(cardIndex, movingCards.length);
+
             //Make last card of the movingChunk showFront true
             if (updatedCards[chunkIndex].length > 0) {
                 updatedCards[chunkIndex][cardIndex - 1].showFront = true;
             }
+
             //Update cards state
             setCards(updatedCards);
-            //Update score
+
+            //Update user score
             scoreBoardRef.current.updateUserScore(10);
+
             //Check if there is any completed suits
             checkForCompletedDecs();
         }
@@ -60,6 +64,7 @@ export const GameContextProvider = ({ children }) => {
         const playingCards = [...cards];
         for (let i = 0; i < playingCards.length; i++) {
             for (let k = 0; k < playingCards[i].length; k++) {
+                //If there is a card deck starts from 'A' check the cards under it 
                 if (playingCards[i][k].value === 'A') {
                     let index = k;
                     while (index !== playingCards[i].length - 1) {
@@ -74,17 +79,18 @@ export const GameContextProvider = ({ children }) => {
                             break;
                         }
                     }
+                    //If 12 cards ranged
                     if (counter === 12 && index === playingCards[i].length - 1) {
                         playingCards[i].splice(k, 13);
                         const length = playingCards[i].length;
-                        //If its not an empty suit
+                        //If its not an empty suit make last item showing front side
                         if (length > 0) {
                             playingCards[i][length - 1].showFront = true;
                         }
                         setCards(playingCards);
-                        // //Update score
-                        scoreBoardRef.current.updateUserScore(10);
-
+                        //Update user score
+                        scoreBoardRef.current.updateUserScore(100);
+                        //Increment collected decs count
                         setCollectedDecsCount(collectedDecsCount + 1);
                     } else {
                         counter = 0;
@@ -95,6 +101,7 @@ export const GameContextProvider = ({ children }) => {
     };
 
     const setMove = (itemLength, movingChunkIndex, movedChunkIndex) => {
+        //Set previous move to the moves state
         const prevStateArr = [...prevMoves]
         const move = { itemLength: itemLength, movedChunkIndex: movedChunkIndex, movingChunkIndex: movingChunkIndex }
         prevStateArr.push(move)
@@ -160,6 +167,7 @@ export const GameContextProvider = ({ children }) => {
                 setFloorCards,
                 addCardToBoard,
                 checkForCompletedDecs,
+                emptySuitExists,
                 setCommonError,
                 scoreBoardRef
             }}

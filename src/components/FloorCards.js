@@ -25,6 +25,7 @@ const FloorCards = () => {
   const [remainingCardClaim, setRemainingCardClaim] = useState(5);
 
   const dealTheCards = () => {
+
     if (emptySuitExists()) {
       const prevCards = floorCards;
       //Get last 10 item of the floor cards
@@ -41,6 +42,7 @@ const FloorCards = () => {
       const error = { show: false, message: "You can not deal cards when a chunk empty!" }
       setCommonError(error);
     }
+    
   };
 
   const dealFloorCards = (dealingCards) => {

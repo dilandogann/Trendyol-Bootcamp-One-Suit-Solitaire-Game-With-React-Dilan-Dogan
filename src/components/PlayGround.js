@@ -1,11 +1,13 @@
 import { Container, Grid } from '@material-ui/core';
-import React, { useState, useRef } from 'react';
+import React, { useContext } from 'react';
 import { makeStyles } from '@material-ui/core';
 import Timer from './Timer';
 import ScoreBoard from './ScoreBoard';
 import FloorCards from '../../../solitare/src/components/FloorCards';
 import CollectedDecs from '../../../solitare/src/components/CollectedDecs';
 import CommonErrorAlertComponent from '../../../solitare/src/components/CommonErrorAlertComponent';
+import { GameContext } from '../../../solitare/src/context/GameContext';
+import GameDecks from '../../../solitare/src/components/GameDecks';
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -39,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
 const PlayGround = () => {
 
     const classes = useStyles();
-    const scoreBoardRef= useRef();
+    const { scoreBoardRef } = useContext(GameContext);
 
     return (
         <Container maxWidth='lg'>
@@ -71,6 +73,7 @@ const PlayGround = () => {
                     </Grid>
                 </div>
             </Grid>
+            <GameDecks />
         </Container>
     );
 };

@@ -10,7 +10,7 @@ export const GameContextProvider = ({ children }) => {
     const [cards, setCards] = useState([]);
     const [floorCards, setFloorCards] = useState([]);
     const [collectedDecsCount, setCollectedDecsCount] = useState(0);
-    const [prevMoves, setPrevMoves] = useState([]);
+    const [prevMoves, setPrevMove] = useState([]);
     const [commonError, setCommonError] = useState({ show: false, message: "" });
 
     const scoreBoardRef = useRef();
@@ -33,7 +33,7 @@ export const GameContextProvider = ({ children }) => {
             //Set the move to moves state 
             let movingChunkLength = cards[chunkIndex].length;
             const movingItemsLength = movingChunkLength - cardIndex + 1
-            setPrevMove(movingItemsLength, chunkIndex, droppedChunkIndex)
+            setMove(movingItemsLength, chunkIndex, droppedChunkIndex)
             
             for (let i = cardIndex; i < movingChunkLength; i++) {
                 movingCards.push(cards[chunkIndex][i]);
@@ -94,11 +94,11 @@ export const GameContextProvider = ({ children }) => {
         }
     };
 
-    const setPrevMove = (itemLength, movingChunkIndex, movedChunkIndex) => {
+    const setMove = (itemLength, movingChunkIndex, movedChunkIndex) => {
         const prevStateArr = [...prevMoves]
         const move = { itemLength: itemLength, movedChunkIndex: movedChunkIndex, movingChunkIndex: movingChunkIndex }
         prevStateArr.push(move)
-        setPrevMoves(prevStateArr)
+        setPrevMove(prevStateArr)
     }
 
         //If there is any empty suit,dont deal floor cards
@@ -109,6 +109,21 @@ export const GameContextProvider = ({ children }) => {
             }
             return false
         }
+
+    //When user clicked to revoke button,set state to prev state
+    const revokeBack = () => {
+
+        const prevStateArr = [...prevMoves]
+        if (prevStateArr.length > 0) {
+            const lastMove = prevStateArr.pop()
+            setPrevMove(prevStateArr)
+            const prevCards = [...cards]
+            for (let i = 0; i < lastMove.itemLength; i++) {
+                prevCards[lastMove.movedChunkIndex].push(prevCards[lastMove.movingChunkIndex].pop())
+            }
+            setCards(prevCards)
+        }
+    }
 
     return (
         <GameContext.Provider

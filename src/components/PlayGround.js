@@ -5,6 +5,7 @@ import Timer from './Timer';
 import ScoreBoard from './ScoreBoard';
 import FloorCards from '../../../solitare/src/components/FloorCards';
 import CollectedDecs from '../../../solitare/src/components/CollectedDecs';
+import CommonErrorAlertComponent from '../../../solitare/src/components/CommonErrorAlertComponent';
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -42,6 +43,7 @@ const PlayGround = () => {
 
     return (
         <Container maxWidth='lg'>
+          <CommonErrorAlertComponent/>
             <Grid>
                 <Timer />
                 <ScoreBoard ref={scoreBoardRef}/>

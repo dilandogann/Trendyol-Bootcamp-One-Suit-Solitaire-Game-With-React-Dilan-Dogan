@@ -1,5 +1,7 @@
 import { Grid, makeStyles } from '@material-ui/core';
 import React, { useContext } from 'react';
+import PlayingCard from './PlayingCard';
+import { v4 as uuidv4 } from 'uuid';
 import { GameContext } from '../context/GameContext';
 
 const useStyles = makeStyles((theme) => ({
@@ -18,7 +20,11 @@ const GameDecks = () => {
   return (
     <Grid container className={classes.container}>
       {cards.map((chunk, chunkIndex) => (
-        <div>{{ chunkIndex }}</div>
+        <PlayingCard
+        key={uuidv4()}
+        chunkIndex={chunkIndex}
+        chunk={chunk}
+      />
       ))}
     </Grid>
   );

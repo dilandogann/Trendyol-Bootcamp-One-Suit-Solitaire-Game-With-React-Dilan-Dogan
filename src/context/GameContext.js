@@ -101,6 +101,15 @@ export const GameContextProvider = ({ children }) => {
         setPrevMoves(prevStateArr)
     }
 
+        //If there is any empty suit,dont deal floor cards
+        const emptySuitExists = () => {
+            for (let i = 0; i < cards.length; i++) {
+                if (cards[i].length === 0)
+                    return true
+            }
+            return false
+        }
+
     return (
         <GameContext.Provider
             value={{

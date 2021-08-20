@@ -1,6 +1,6 @@
 import _ from 'lodash';
-import Card from '../Card';
-import CardValues from '../CardValues';
+import Card from './Card';
+import CardValues from './CardValues';
 
 let id = 1;
 let cards = [];

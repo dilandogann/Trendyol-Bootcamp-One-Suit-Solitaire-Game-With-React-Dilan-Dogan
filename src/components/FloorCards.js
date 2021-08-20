@@ -3,7 +3,6 @@ import React, { useContext, useState } from 'react';
 import spadesBack from '../assets/spades-back.png';
 import { GameContext } from '../context/GameContext';
 
-
 const useStyles = makeStyles((theme) => ({
   imageBox: {
     borderRadius: '10px',
@@ -25,8 +24,7 @@ const FloorCards = () => {
   const [remainingCardClaim, setRemainingCardClaim] = useState(5);
 
   const dealTheCards = () => {
-
-    if (emptySuitExists()) {
+    if (!emptySuitExists()) {
       const prevCards = floorCards;
       //Get last 10 item of the floor cards
       const splicedCards = prevCards.splice(-10);

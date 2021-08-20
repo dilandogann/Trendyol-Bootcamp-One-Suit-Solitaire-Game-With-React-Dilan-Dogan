@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useRef, useState } from 'react';
-import { initializeCards } from '../game/useLogic';
+import { initializeCards } from '../helpers/InitilazeGameCardsHelper';
 
 
 // Our Header Context

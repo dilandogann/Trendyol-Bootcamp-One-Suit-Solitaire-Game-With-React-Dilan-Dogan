@@ -3,7 +3,7 @@ import React, { useContext } from 'react';
 import Single from './Single';
 import { makeStyles } from '@material-ui/core';
 import { useDrop } from 'react-dnd';
-import CardPlaceHolder from './CardPlaceHolder';
+import PlaceHolder from './PlaceHolder';
 import { GameContext } from '../context/GameContext';
 
 const useStyles = makeStyles((theme) => ({
@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const PlayingCard = ({ chunk , chunkIndex}) => {
+const PlayingCard = ({ chunk, chunkIndex }) => {
   const classes = useStyles();
   const { addCardToBoard} = useContext(GameContext);
 
@@ -32,7 +32,6 @@ const PlayingCard = ({ chunk , chunkIndex}) => {
     }),
   }));
 
-  
   const isDroppable = (item) => {
     if (chunk.length === 0)
       return true;
@@ -54,6 +53,7 @@ const PlayingCard = ({ chunk , chunkIndex}) => {
         container
         direction='column'
         className={classes.container}
+        ref={drop}
       >
         {chunk.map((card, cardIndex) => (
           <Grid item key={card.id}>
@@ -73,7 +73,7 @@ const PlayingCard = ({ chunk , chunkIndex}) => {
           className={classes.container}
           ref={drop}
         >
-          <CardPlaceHolder />
+          <PlaceHolder />
         </Grid>}
     </Grid>
   );

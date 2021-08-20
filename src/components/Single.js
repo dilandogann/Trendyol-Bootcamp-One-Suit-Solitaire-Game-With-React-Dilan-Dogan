@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Single = ({ card, click, chunkIndex, cardIndex , isDraggable}) => {
+const Single = ({ card, click, chunkIndex, cardIndex, isDraggable }) => {
   const classes = useStyles(cardIndex);
 
   const [{ isDragging }, drag] = useDrag(() => ({
@@ -57,7 +57,7 @@ const Single = ({ card, click, chunkIndex, cardIndex , isDraggable}) => {
       isDragging: !!monitor.isDragging(),
     }),
   }));
-  
+
   return card.showFront ? (
     <img
       ref={drag}

@@ -6,7 +6,7 @@ const useStyles = makeStyles((theme) => ({
       width: 124,
       height: 143,
       background: 'transparent',
-      border: '2px solid rgb(0 0 0 / 87%)',
+      border: '6px solid rgb(174,220,249)',
       borderRadius: 8,
       marginRight: 5,
       [theme.breakpoints.down('md')]: {
@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
       },
     },
   }));
-const CardPlaceHolder = () => {
+const PlaceHolder = () => {
     const classes = useStyles();
 
     return(
@@ -36,4 +36,4 @@ const CardPlaceHolder = () => {
     );
 }
 
-export default CardPlaceHolder;
+export default PlaceHolder;

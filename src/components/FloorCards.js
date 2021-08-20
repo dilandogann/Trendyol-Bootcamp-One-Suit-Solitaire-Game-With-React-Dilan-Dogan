@@ -1,6 +1,8 @@
 import { makeStyles } from '@material-ui/core';
 import React, { useState } from 'react';
-import heartsBack from '../assets/hearts-back.jpg';
+import spadesBack from '../assets/spades-back.png';
+import { GameContext } from '../context/GameContext';
+
 
 const useStyles = makeStyles((theme) => ({
   imageBox: {
@@ -16,22 +18,38 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const FloorCards = ({ floorCards, dealFloorCards, setFloorCards }) => {
+const FloorCards = () => {
   const classes = useStyles();
 
+  const { cards, floorCards, setCards, setFloorCards, checkForCompletedDecs, emptySuitExists, setCommonError } = useContext(GameContext);
   const [remainingCardClaim, setRemainingCardClaim] = useState(5);
 
   const dealTheCards = () => {
-    //Set floorcards to prev state
-    const prevCards = floorCards;
-    //Get last 10 item of the floor cards
-    const splicedCards = prevCards.splice(-10);
-    //Set new floor cards state
-    setFloorCards(prevCards);
-    //Reduce 1 card dealing claim
-    setRemainingCardClaim(remainingCardClaim - 1);
-    //Send spliced floor cards to playGround component
-    dealFloorCards(splicedCards);
+    if (emptySuitExists()) {
+      const prevCards = floorCards;
+      //Get last 10 item of the floor cards
+      const splicedCards = prevCards.splice(-10);
+      setFloorCards(prevCards);
+      //Reduce 1 card dealing claim
+      setRemainingCardClaim(remainingCardClaim - 1);
+      //Dealing cards to playing card chunks
+      dealFloorCards(splicedCards);
+      //Check for if there is any completed suits
+      checkForCompletedDecs()
+    }
+    else {
+      const error = { show: false, message: "You can not deal cards when a chunk empty!" }
+      setCommonError(error);
+    }
+  };
+
+  const dealFloorCards = (dealingCards) => {
+    const prevCards = cards;
+    for (let i = 0; i < 10; i++) {
+      dealingCards[i].showFront = true;
+      prevCards[i].push(dealingCards[i]);
+    }
+    setCards(() => [...prevCards]);
   };
   return (
     <>
@@ -39,7 +57,7 @@ const FloorCards = ({ floorCards, dealFloorCards, setFloorCards }) => {
         <img
           key={index}
           className={classes.imageBox}
-          src={heartsBack}
+          src={spadesBack}
           alt='closedCard'
           onClick={() => dealTheCards()}
         />

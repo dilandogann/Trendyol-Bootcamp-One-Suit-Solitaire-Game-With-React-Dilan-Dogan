@@ -11,9 +11,13 @@ import ScoreBoard from './ScoreBoard';
 import Timer from './Timer';
 import solitareLogo from '../assets/solitareLogo.jfif';
 import { useStyles } from '../styles/styles.Header';
+import UndoIcon from '@material-ui/icons/Undo';
+import { PreviousMovesContext } from '../context/PreviousMovesContext';
 
 const Header = () => {
-  const { scoreBoardRef, restartGame } = useContext(GameContext);
+  const { scoreBoardRef, restartGame, undoMove } = useContext(GameContext);
+  const { prevMoves } = useContext(PreviousMovesContext)
+
 
   const classes = useStyles();
   return (
@@ -28,9 +32,19 @@ const Header = () => {
           <Timer />
           <ScoreBoard ref={scoreBoardRef} />
         </div>
-
         <div>
-          <Button color='secondary' variant='contained' onClick={()=>restartGame()}>
+          <Button
+            variant="contained"
+            color="primary"
+            className={classes.button}
+            startIcon={<UndoIcon />}
+            style={{ marginRight: '10px' }}
+            onClick={() => undoMove()}
+            disabled={prevMoves.length === 0}
+          >
+            Undo
+          </Button>
+          <Button color='secondary' variant='contained' onClick={() => restartGame()}>
             New Game
           </Button>
         </div>

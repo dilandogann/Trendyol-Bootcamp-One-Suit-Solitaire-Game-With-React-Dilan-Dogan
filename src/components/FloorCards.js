@@ -12,7 +12,6 @@ const FloorCards = () => {
   const [remainingCardClaim, setRemainingCardClaim] = useState(5);
 
   const calculateRemainingCardClaim = () =>{
-    console.log(floorCards.length/chunkSize)
     return floorCards.length/chunkSize
   }
   const dealCards = () => {

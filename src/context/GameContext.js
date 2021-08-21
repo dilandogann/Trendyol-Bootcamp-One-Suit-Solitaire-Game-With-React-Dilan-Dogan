@@ -90,7 +90,7 @@ export const GameContextProvider = ({ children }) => {
 
             //Set the move to moves state 
             let movingChunkLength = tableCards[movingChunkIndex].length;
-            const movingItemsLength = movingChunkLength - movingCardIndex + 1
+            const movingItemsLength = movingChunkLength - movingCardIndex 
             addMove(movingItemsLength, movingChunkIndex, droppedChunkIndex)
 
             for (let i = movingCardIndex; i < movingChunkLength; i++) {
@@ -159,15 +159,18 @@ export const GameContextProvider = ({ children }) => {
     };
 
     //When user clicked to revoke button,set state to prev state
-    const undoBack = () => {
+    const undoMove = () => {
 
         const prevStateArr = [...prevMoves]
         if (prevStateArr.length > 0) {
             const lastMove = prevStateArr.pop()
             setPrevMove(prevStateArr)
             const prevCards = [...tableCards]
-            for (let i = 0; i < lastMove.itemLength; i++) {
-                prevCards[lastMove.movedChunkIndex].push(prevCards[lastMove.movingChunkIndex].pop())
+            if(!prevCards[lastMove.movingChunkIndex][prevCards[lastMove.movingChunkIndex].length-2].showFront){
+                prevCards[lastMove.movingChunkIndex][prevCards[lastMove.movingChunkIndex].length-1].showFront = false
+            }
+            for (let i = 0; i < lastMove.movingItemsLength; i++) {
+                prevCards[lastMove.movingChunkIndex].push(prevCards[lastMove.movedChunkIndex].pop())
             }
             setTableCards(prevCards)
         }
@@ -183,7 +186,8 @@ export const GameContextProvider = ({ children }) => {
                 setFloorCards,
                 makeMove,
                 checkIfThereIsAnyCompletedSets,
-                restartGame
+                restartGame,
+                undoMove
             }}
         >
             {children}

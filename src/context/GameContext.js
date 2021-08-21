@@ -164,6 +164,7 @@ export const GameContextProvider = ({ children }) => {
         const prevStateArr = [...prevMoves]
         if (prevStateArr.length > 0) {
             const lastMove = prevStateArr.pop()
+
             setPrevMove(prevStateArr)
             const prevCards = [...tableCards]
             if(!prevCards[lastMove.movingChunkIndex][prevCards[lastMove.movingChunkIndex].length-2].showFront){

@@ -11,7 +11,6 @@ export const PreviousMovesContextProvider = ({ children }) => {
         const move = { movingItemsLength: movingItemsLength, movedChunkIndex: movedChunkIndex, movingChunkIndex: movingChunkIndex }
         prevStateArr.push(move)
         setPrevMove(prevStateArr)
-        console.log(prevStateArr)
     }
 
 

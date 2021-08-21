@@ -32,7 +32,7 @@ export const GameContextProvider = ({ children }) => {
     const [floorCards, setFloorCards] = useState([]);
 
     const { collectedSetsCount, updateCollectedSetsCount } = useContext(CompletedSetsContext);
-    const { updateSore } = useContext(ScoreContext);
+    const { setScore,updateSore } = useContext(ScoreContext);
     const { prevMoves, setPrevMove, addMove } = useContext(PreviousMovesContext)
     const { handleOpen } = useContext(GameFinishedContext);
     const { stopInterval, setMyInterval } = useContext(TimerContext);
@@ -47,7 +47,7 @@ export const GameContextProvider = ({ children }) => {
         GameState.init()
         stopInterval()
         setMyInterval()
-        updateSore(0)
+        setScore(0)
     }
 
     const makeMove = (movingCardIndex, movingChunkIndex, droppedChunkIndex) => {

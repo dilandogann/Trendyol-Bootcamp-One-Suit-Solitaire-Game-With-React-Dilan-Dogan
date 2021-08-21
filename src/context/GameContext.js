@@ -5,6 +5,8 @@ import CardValues from "../helpers/CardValues"
 import { CompletedSetsContext } from './CompletedSetsContext';
 import { ScoreContext } from './ScoreContext';
 import { PreviousMovesContext } from './PreviousMovesContext';
+import { GameFinishedContext } from './GameFinishedContext';
+import { TimerContext } from './TimerContext';
 
 // Our Header Context
 export const GameContext = createContext();
@@ -32,13 +34,20 @@ export const GameContextProvider = ({ children }) => {
     const { updateCollectedSetsCount } = useContext(CompletedSetsContext);
     const { updateSore } = useContext(ScoreContext);
     const { prevMoves, setPrevMove, addMove } = useContext(PreviousMovesContext)
-
+    const { handleOpen } = useContext(GameFinishedContext);
+    const { stopInterval,setMyInterval } = useContext(TimerContext);
 
     useEffect(() => {
         setTableCards(GameState.tableCards);
         setFloorCards(GameState.floorCards);
-    }, []);
-
+    }, GameState.cards);
+    
+    const restartGame = () =>{
+        GameState.restartGameState()
+        GameState.init()
+        stopInterval()
+        setMyInterval()
+    }
 
     const makeMove = (movingCardIndex, movingChunkIndex, droppedChunkIndex) => {
 
@@ -48,13 +57,17 @@ export const GameContextProvider = ({ children }) => {
             updateSore(correctMovePoint);
             //Check if there is any completed suits
             checkIfThereIsAnyCompletedSets()
-
+            //Check ıf game completed
+            checkIfGameCompleted()
         }
-
     };
-    
+
+    const checkIfGameCompleted = () => {
+            stopInterval()
+            handleOpen()
+    }
     const checkIfThereIsAnyCompletedSets = () => {
-        
+
         if (setCompleted()) {
             //Update user score
             updateSore(setCompletedPoint);
@@ -70,7 +83,7 @@ export const GameContextProvider = ({ children }) => {
 
         //If dropping chunk is empty or last card of the dropped chunk's next value is equal to first card of moving cards value,push items to dropped chunk
         if (droppedChunkLength === 0 || (tableCards[movingChunkIndex][movingCardIndex].value === tableCards[droppedChunkIndex][droppedChunkLength - 1].nextValue)) {
-
+            console.log("a")
             //Set the move to moves state 
             let movingChunkLength = tableCards[movingChunkIndex].length;
             const movingItemsLength = movingChunkLength - movingCardIndex + 1
@@ -88,14 +101,16 @@ export const GameContextProvider = ({ children }) => {
             if (updatedCards[movingChunkIndex].length > 0) {
                 updatedCards[movingChunkIndex][movingCardIndex - 1].showFront = true;
             }
-
             //Update cards state
             setTableCards(updatedCards);
 
             return true;
 
         }
-        return false;
+        else {
+            return false;
+
+        }
     };
 
     const setCompleted = () => {
@@ -163,6 +178,7 @@ export const GameContextProvider = ({ children }) => {
                 setFloorCards,
                 makeMove,
                 checkIfThereIsAnyCompletedSets,
+                restartGame
             }}
         >
             {children}

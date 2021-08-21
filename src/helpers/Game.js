@@ -93,4 +93,11 @@ export default class Game {
         }
     };
 
+    restartGameState(){
+        this.cards = []
+        this.tableCards = [];
+        this.floorCards = []
+        this.randomTableCardIndexes = []
+    }
+
 }

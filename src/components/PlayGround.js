@@ -1,55 +1,17 @@
 import { Container, Grid } from '@material-ui/core';
-import React, { useContext} from 'react';
-import { makeStyles } from '@material-ui/core';
+import React from 'react';
 import FloorCards from './FloorCards';
 import CollectedSets from './CollectedSets';
 import GameDecks from './GameDecks';
-import Timer from './Timer';
-import ScoreBoard from './ScoreBoard';
 import CommonErrorAlertComponent from './CommonErrorAlertComponent';
-
-const useStyles = makeStyles((theme) => ({
-  container: {
-    marginTop: 35,
-  },
-  floorAndCollectedContainer: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexWrap: 'no-wrap',
-    [theme.breakpoints.down('sm')]: {
-      flexDirection: 'column'
-    },
-  },
-  newDeck: {
-    cursor: 'pointer',
-    transition: 'all 0.2s ease-in-out',
-    // marginLeft:20,
-    '&:hover': {
-      transform: 'scaleY(1.05)',
-    },
-  },
-  collectedDecsGrid: {
-    display: 'flex',
-    // marginLeft: 'auto',
-    flexWrap: 'no-wrap',
-    [theme.breakpoints.up('md')]: {
-      marginLeft: 'auto',
-    },
-  },
-}));
+import { useStyles } from '../styles/styles.PlayGround';
 
 const PlayGround = () => {
-
   const classes = useStyles();
 
   return (
-    <Container maxWidth='lg' className={classes.container}>
-      <CommonErrorAlertComponent/>
-      <Grid>
-        <Timer />
-        <ScoreBoard />
-      </Grid>
+    <Container maxWidth='lg'>
+      <CommonErrorAlertComponent />
       <Grid
         style={{ marginTop: '100px' }}
         container
@@ -69,7 +31,7 @@ const PlayGround = () => {
         </div>
         <div>
           <Grid item xs={12} md={9} className={classes.collectedDecsGrid}>
-            <CollectedSets/>
+            <CollectedSets />
           </Grid>
         </div>
       </Grid>

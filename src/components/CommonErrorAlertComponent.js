@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function CommonErrorAlertComponent() {
+export default function CommonErrorAlertComponent () {
     const classes = useStyles();
     const { commonError, updateError } = useContext(CommonErrorContext);
 
@@ -28,8 +28,8 @@ export default function CommonErrorAlertComponent() {
 
     return (
         <div className={classes.root}>
-            <Snackbar open={commonError.show} autoHideDuration={6000} onClose={handleClose} anchorOrigin={{vertical: 'bottom', horizontal: 'center'}}>
-                <Alert onClose={handleClose} severity="error">{commonError.show}</Alert>
+            <Snackbar open={commonError.show} autoHideDuration={3000} onClose={handleClose} anchorOrigin={{vertical: 'top', horizontal: 'center'}}>
+                <Alert onClose={handleClose} severity="error">{commonError.message}</Alert>
             </Snackbar>
         </div>
     );

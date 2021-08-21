@@ -1,22 +1,8 @@
-import { makeStyles } from '@material-ui/core';
 import React, { useContext, useState } from 'react';
 import spadesBack from '../assets/spades-back.png';
 import { CommonErrorContext } from '../context/CommonErrorContext';
 import { GameContext } from '../context/GameContext';
-
-const useStyles = makeStyles((theme) => ({
-  imageBox: {
-    borderRadius: '10px',
-    marginLeft: '-50px',
-    boxShadow: '10px 10px 6px 0px rgba(0,0,0,0.75)',
-    webkitBoxShadow: '10px 10px 6px 0px rgba(0,0,0,0.75)',
-    mozBoxShadow: '10px 10px 6px 0px rgba(0,0,0,0.75)',
-    width: '90px',
-    [theme.breakpoints.down('md')]: {
-        width: '75px',
-      },
-  },
-}));
+import { useStyles } from '../styles/styles.FloorCards';
 
 const FloorCards = () => {
   const classes = useStyles();
@@ -35,7 +21,7 @@ const FloorCards = () => {
       checkIfThereIsAnyCompletedSets()
     }
     else {
-      const error = { show: false, message: "You can not deal cards when a chunk empty!" }
+      const error = { show: true, message: "You can not deal cards when a chunk empty!" }
       updateError(error);
     }
     

@@ -1,28 +1,33 @@
-import React, { createContext, useEffect, useRef, useState } from 'react';
+import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
 import Chunk from "../helpers/Chunk"
 import Game from "../helpers/Game"
 import CardValues from "../helpers/CardValues"
+import { CompletedSetsContext } from './CompletedSetsContext';
+import { ScoreContext } from './ScoreContext';
+import { PreviousMovesContext } from './PreviousMovesContext';
+
 // Our Header Context
 export const GameContext = createContext();
 
 export const GameContextProvider = ({ children }) => {
-
+    const correctMovePoint = 10;
+    const setCompletedPoint= 100;
     const [cards, setCards] = useState([]);
     const [floorCards, setFloorCards] = useState([]);
-    const [collectedDecsCount, setCollectedDecsCount] = useState(0);
-    const [prevMoves, setPrevMove] = useState([]);
-    const [commonError, setCommonError] = useState({ show: false, message: "" });
+    const { updateCollectedSetsCount } = useContext(CompletedSetsContext);
+    const { updateSore } = useContext(ScoreContext);
+    const { prevMoves,setPrevMove,addMove } = useContext(PreviousMovesContext)
+
     const FirstChunk= new Chunk(6,4);
     const SecondChunk = new Chunk(5,6);
     const GameState = new Game(CardValues,8,54,50,FirstChunk,SecondChunk);
     GameState.init()
-    console.log(GameState.tableCards.length)
     const scoreBoardRef = useRef();
 
     useEffect(() => {
         setCards(GameState.tableCards);
         setFloorCards(GameState.floorCards);
-    }, []);
+    }, [] );
 
 
     const addCardToBoard = (chunkIndex, cardIndex, droppedChunkIndex) => {
@@ -36,7 +41,7 @@ export const GameContextProvider = ({ children }) => {
             //Set the move to moves state 
             let movingChunkLength = cards[chunkIndex].length;
             const movingItemsLength = movingChunkLength - cardIndex + 1
-            setMove(movingItemsLength, chunkIndex, droppedChunkIndex)
+            addMove(movingItemsLength, chunkIndex, droppedChunkIndex)
 
             for (let i = cardIndex; i < movingChunkLength; i++) {
                 movingCards.push(cards[chunkIndex][i]);
@@ -55,7 +60,7 @@ export const GameContextProvider = ({ children }) => {
             setCards(updatedCards);
 
             //Update user score
-            scoreBoardRef.current.updateUserScore(10);
+            updateSore(correctMovePoint);
 
             //Check if there is any completed suits
             checkForCompletedDecs();
@@ -92,9 +97,9 @@ export const GameContextProvider = ({ children }) => {
                         }
                         setCards(playingCards);
                         //Update user score
-                        scoreBoardRef.current.updateUserScore(100);
+                        updateSore(setCompletedPoint);
                         //Increment collected decs count
-                        setCollectedDecsCount(collectedDecsCount + 1);
+                        updateCollectedSetsCount();
                     } else {
                         counter = 0;
                     }
@@ -103,25 +108,8 @@ export const GameContextProvider = ({ children }) => {
         }
     };
 
-    const setMove = (itemLength, movingChunkIndex, movedChunkIndex) => {
-        //Set previous move to the moves state
-        const prevStateArr = [...prevMoves]
-        const move = { itemLength: itemLength, movedChunkIndex: movedChunkIndex, movingChunkIndex: movingChunkIndex }
-        prevStateArr.push(move)
-        setPrevMove(prevStateArr)
-    }
-
-    //If there is any empty suit,dont deal floor cards
-    const emptySuitExists = () => {
-        for (let i = 0; i < cards.length; i++) {
-            if (cards[i].length === 0)
-                return true
-        }
-        return false
-    }
-
     //When user clicked to revoke button,set state to prev state
-    const revokeBack = () => {
+    const undoBack = () => {
 
         const prevStateArr = [...prevMoves]
         if (prevStateArr.length > 0) {
@@ -135,28 +123,13 @@ export const GameContextProvider = ({ children }) => {
         }
     }
 
-    const trick = () => {
-        // if you want to be more clever...
+    //If there is any empty suit,dont deal floor cards
+    const emptySuitExists = () => {
         for (let i = 0; i < cards.length; i++) {
-
+            if (cards[i].length === 0)
+                return true
         }
-        //let result = result1.filter(o1 => result2.some(o2 => o1.id === o2.id));
-        for (let i = 0; i < cards.length; i++) {
-            const length = cards[i].length
-            if (length > 0) {
-                const item = cards[i][length - 1]
-                if (item.nextValue !== null) {
-                    const nextValue = item.nextValue
-                    for (let k = 0; k < 10; k++) {
-                        if (k === i) continue
-                        let lastItem = cards[k][cards[k].length - 1]
-                        if (lastItem) {
-
-                        }
-                    }
-                }
-            }
-        }
+        return false
     }
 
     return (
@@ -164,14 +137,11 @@ export const GameContextProvider = ({ children }) => {
             value={{
                 cards,
                 floorCards,
-                collectedDecsCount,
-                commonError,
                 setCards,
                 setFloorCards,
                 addCardToBoard,
                 checkForCompletedDecs,
                 emptySuitExists,
-                setCommonError,
                 scoreBoardRef
             }}
         >

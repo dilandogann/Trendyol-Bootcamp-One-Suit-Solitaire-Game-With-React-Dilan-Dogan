@@ -2,7 +2,7 @@ import { Container, Grid } from '@material-ui/core';
 import React, { useContext} from 'react';
 import { makeStyles } from '@material-ui/core';
 import FloorCards from './FloorCards';
-import CollectedDecs from './CollectedDecs';
+import CollectedSets from './CollectedSets';
 import GameDecks from './GameDecks';
 import Timer from './Timer';
 import ScoreBoard from './ScoreBoard';
@@ -71,7 +71,7 @@ const PlayGround = () => {
         </div>
         <div>
           <Grid item xs={12} md={9} className={classes.collectedDecsGrid}>
-            <CollectedDecs/>
+            <CollectedSets/>
           </Grid>
         </div>
       </Grid>

@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import { makeStyles } from '@material-ui/core/styles';
-import { GameContext } from '../context/GameContext';
+import { CommonErrorContext } from '../context/CommonErrorContext';
 
 function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -16,14 +16,14 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CommonErrorAlertComponent() {
     const classes = useStyles();
-    const { commonError, setCommonError } = useContext(GameContext);
+    const { commonError, updateError } = useContext(CommonErrorContext);
 
     const handleClose = (reason) => {
         if (reason === 'clickaway') {
             return;
         }
         const error = { show: false, message: "" }
-        setCommonError(error);
+        updateError(error);
     };
 
     return (

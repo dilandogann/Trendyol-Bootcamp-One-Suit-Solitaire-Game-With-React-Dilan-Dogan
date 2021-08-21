@@ -47,6 +47,7 @@ export const GameContextProvider = ({ children }) => {
         GameState.init()
         stopInterval()
         setMyInterval()
+        updateSore(0)
     }
 
     const makeMove = (movingCardIndex, movingChunkIndex, droppedChunkIndex) => {

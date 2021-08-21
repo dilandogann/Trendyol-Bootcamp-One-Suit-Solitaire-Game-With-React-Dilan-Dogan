@@ -1,7 +1,7 @@
 import React from 'react';
-import spadesBack from '../assets/spades-back.png';
 import { makeStyles } from '@material-ui/core';
 import { useDrag } from 'react-dnd';
+import { ImageHelper }from '../helpers/ImageHelper'
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -61,16 +61,16 @@ const Single = ({ card, click, chunkIndex, cardIndex, isDraggable }) => {
   return card.showFront ? (
     <img
       ref={drag}
-      src={card.image}
-      alt={card.image}
+      src={ImageHelper(card.value)}
+      alt={ImageHelper(card.value)}
       className={classes.showFront}
       onClick={click}
       style={{ border: isDragging ? '3px solid pink' : '0px' }}
     />
   ) : (
     <img
-      src={spadesBack}
-      alt={card.image}
+      src={ImageHelper()}
+      alt={ImageHelper()}
       className={classes.card}
       onClick={click}
     />

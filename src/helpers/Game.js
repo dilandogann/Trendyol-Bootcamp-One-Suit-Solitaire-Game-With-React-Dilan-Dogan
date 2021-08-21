@@ -5,14 +5,14 @@ import _ from 'lodash';
 
 export default class Game {
 
-    constructor(cardValues, decCount, tableCardsLength, floorCardsLength, firstChunk, secondChunk) {
+    constructor(cardValues, decCount, tableCardsCount, floorCardsCount, firstChunk, secondChunk) {
 
         this.cards = []
         this.tableCards = [];
         this.floorCards = []
         this.randomTableCardIndexes = []
-        this.floorCardsLength = floorCardsLength
-        this.tableCardsLength = tableCardsLength
+        this.floorCardsCount = floorCardsCount
+        this.tableCardsCount = tableCardsCount
         this.cardValues = cardValues
         this.decCount = decCount
         this.firstChunk = firstChunk
@@ -39,7 +39,7 @@ export default class Game {
     initializeOneDec() {
 
         const initialCards = this.cardValues.map((cardItem) => {
-            return new Card(uuidv4(), cardItem.value, cardItem.nextValue, cardItem.image);
+            return new Card(uuidv4(), cardItem.value, cardItem.nextValue);
         });
         this.cards.push(...initialCards);
 
@@ -53,8 +53,8 @@ export default class Game {
 
     createRandomTableCardIndexes() {
 
-        let upperBound = this.tableCardsLength + this.floorCardsLength - 1
-        while (this.randomTableCardIndexes.length !== this.tableCardsLength) {
+        let upperBound = this.tableCardsCount + this.floorCardsCount - 1
+        while (this.randomTableCardIndexes.length !== this.tableCardsCount) {
             let randomNum = _.random(0, upperBound);
             if (this.randomTableCardIndexes.includes(randomNum)) continue;
             this.randomTableCardIndexes.push(randomNum);
@@ -72,7 +72,6 @@ export default class Game {
         this.floorCards = this.cards.filter((card) =>
             this.tableCards.every((tableCard) => tableCard.id !== card.id)
         );
-
 
     };
 

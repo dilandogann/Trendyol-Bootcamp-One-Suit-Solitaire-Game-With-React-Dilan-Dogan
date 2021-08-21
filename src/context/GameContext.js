@@ -1,7 +1,8 @@
 import React, { createContext, useEffect, useRef, useState } from 'react';
 import { initializeCards } from '../helpers/InitilazeGameCardsHelper';
-
-
+import Chunk from "../helpers/Chunk"
+import Game from "../helpers/Game"
+import CardValues from "../helpers/CardValues"
 // Our Header Context
 export const GameContext = createContext();
 
@@ -12,13 +13,15 @@ export const GameContextProvider = ({ children }) => {
     const [collectedDecsCount, setCollectedDecsCount] = useState(0);
     const [prevMoves, setPrevMove] = useState([]);
     const [commonError, setCommonError] = useState({ show: false, message: "" });
-
+    const FirstChunk= new Chunk(6,4);
+    const SecondChunk = new Chunk(5,6);
+    const GameState = new Game(CardValues,8,54,50,FirstChunk,SecondChunk);
+    GameState.init()
     const scoreBoardRef = useRef();
 
     useEffect(() => {
-        const { playingCards, floorCards } = initializeCards();
-        setCards(playingCards);
-        setFloorCards(floorCards);
+        setCards(GameState.tableCards);
+        setFloorCards(GameState.floorCards);
     }, []);
 
 

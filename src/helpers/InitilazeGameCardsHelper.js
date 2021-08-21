@@ -32,7 +32,7 @@ export const initializeCards = () => {
 //It creates 13 different playing cards
 const createPlayingCard = () => {
   const initialCards = CardValues.map((cardItem) => {
-    return new Card(cardItem.value, cardItem.nextValue,cardItem.image, id++);
+    return new Card( id++,cardItem.value, cardItem.nextValue,cardItem.image);
   });
 
   cards.push(...initialCards);

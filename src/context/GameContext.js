@@ -31,7 +31,7 @@ export const GameContextProvider = ({ children }) => {
     const [tableCards, setTableCards] = useState([]);
     const [floorCards, setFloorCards] = useState([]);
 
-    const { collectedSetsCount, updateCollectedSetsCount } = useContext(CompletedSetsContext);
+    const { collectedSetsCount, updateCollectedSetsCount,setCollectedSetsCount } = useContext(CompletedSetsContext);
     const { setScore,updateScore } = useContext(ScoreContext);
     const { prevMoves, setPrevMove, addMove } = useContext(PreviousMovesContext)
     const { handleOpen } = useContext(GameFinishedContext);
@@ -48,6 +48,7 @@ export const GameContextProvider = ({ children }) => {
         stopInterval()
         setMyInterval()
         setScore(0)
+        setCollectedSetsCount(0)
     }
 
     const makeMove = (movingCardIndex, movingChunkIndex, droppedChunkIndex) => {
@@ -86,7 +87,7 @@ export const GameContextProvider = ({ children }) => {
 
         //If dropping chunk is empty or last card of the dropped chunk's next value is equal to first card of moving cards value,push items to dropped chunk
         if (droppedChunkLength === 0 || (tableCards[movingChunkIndex][movingCardIndex].value === tableCards[droppedChunkIndex][droppedChunkLength - 1].nextValue)) {
-            console.log("a")
+
             //Set the move to moves state 
             let movingChunkLength = tableCards[movingChunkIndex].length;
             const movingItemsLength = movingChunkLength - movingCardIndex + 1
@@ -177,6 +178,7 @@ export const GameContextProvider = ({ children }) => {
             value={{
                 tableCards,
                 floorCards,
+                chunkSize:FirstChunk.quantity+SecondChunk.quantity,
                 setTableCards,
                 setFloorCards,
                 makeMove,

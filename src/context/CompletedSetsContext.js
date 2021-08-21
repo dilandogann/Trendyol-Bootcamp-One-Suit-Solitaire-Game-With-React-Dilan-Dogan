@@ -15,6 +15,7 @@ export const CompletedSetsContextProvider = ({ children }) => {
             value={{
                 collectedSetsCount,
                 updateCollectedSetsCount,
+                setCollectedSetsCount
             }}
         >
             {children}

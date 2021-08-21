@@ -15,11 +15,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const GameDecks = () => {
-  const { cards} = useContext(GameContext);
+  const { tableCards} = useContext(GameContext);
   const classes = useStyles();
   return (
     <Grid container className={classes.container}>
-      {cards.map((chunk, chunkIndex) => (
+      {tableCards.map((chunk, chunkIndex) => (
         <PlayingCard
           key={uuidv4()}
           chunkIndex={chunkIndex}

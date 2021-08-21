@@ -14,15 +14,15 @@ const useStyles = makeStyles((theme) => ({
 
 const PlayingCard = ({ chunk, chunkIndex }) => {
   const classes = useStyles();
-  const { addCardToBoard} = useContext(GameContext);
+  const { makeMove} = useContext(GameContext);
 
   const [{ isOver, canDrop }, drop] = useDrop(() => ({
     accept: 'image',
     canDrop: (item) => isDroppable(item),
     drop: (item) => {
-      addCardToBoard(
-        item.chunkIndex,
+      makeMove(
         item.cardIndex,
+        item.chunkIndex,
         chunkIndex
       );
     },

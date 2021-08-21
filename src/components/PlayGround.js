@@ -6,7 +6,6 @@ import CollectedSets from './CollectedSets';
 import GameDecks from './GameDecks';
 import Timer from './Timer';
 import ScoreBoard from './ScoreBoard';
-import { GameContext } from '../context/GameContext';
 import CommonErrorAlertComponent from './CommonErrorAlertComponent';
 
 const useStyles = makeStyles((theme) => ({
@@ -43,14 +42,13 @@ const useStyles = makeStyles((theme) => ({
 const PlayGround = () => {
 
   const classes = useStyles();
-  const { scoreBoardRef } = useContext(GameContext);
 
   return (
     <Container maxWidth='lg' className={classes.container}>
       <CommonErrorAlertComponent/>
       <Grid>
         <Timer />
-        <ScoreBoard ref={scoreBoardRef} />
+        <ScoreBoard />
       </Grid>
       <Grid
         style={{ marginTop: '100px' }}

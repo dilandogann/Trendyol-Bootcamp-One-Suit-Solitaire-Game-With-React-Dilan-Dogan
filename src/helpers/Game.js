@@ -28,6 +28,7 @@ export default class Game {
         this.initializeFloorCards()
         this.chunkPlayingCards()
         this.showFrontSideOfLastCardsInChunks()
+        return true;
 
     }
     initializeGameDecs() {

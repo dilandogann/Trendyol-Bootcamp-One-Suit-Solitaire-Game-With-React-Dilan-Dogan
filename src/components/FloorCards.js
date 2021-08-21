@@ -1,6 +1,7 @@
 import { makeStyles } from '@material-ui/core';
 import React, { useContext, useState } from 'react';
 import spadesBack from '../assets/spades-back.png';
+import { CommonErrorContext } from '../context/CommonErrorContext';
 import { GameContext } from '../context/GameContext';
 
 const useStyles = makeStyles((theme) => ({
@@ -20,37 +21,45 @@ const useStyles = makeStyles((theme) => ({
 const FloorCards = () => {
   const classes = useStyles();
 
-  const { cards, floorCards, setCards, setFloorCards, checkForCompletedDecs, emptySuitExists, setCommonError } = useContext(GameContext);
+  const { tableCards, floorCards, setTableCards, setFloorCards, checkIfThereIsAnyCompletedSets } = useContext(GameContext);
+  const { updateError } = useContext(CommonErrorContext);
   const [remainingCardClaim, setRemainingCardClaim] = useState(5);
 
-  const dealTheCards = () => {
-    if (!emptySuitExists()) {
+  const dealCards = () => {
+    if (!emptyChunkExists()) {
       const prevCards = floorCards;
-      //Get last 10 item of the floor cards
       const splicedCards = prevCards.splice(-10);
       setFloorCards(prevCards);
-      //Reduce 1 card dealing claim
       setRemainingCardClaim(remainingCardClaim - 1);
-      //Dealing cards to playing card chunks
       dealFloorCards(splicedCards);
-      //Check for if there is any completed suits
-      checkForCompletedDecs()
+      checkIfThereIsAnyCompletedSets()
     }
     else {
       const error = { show: false, message: "You can not deal cards when a chunk empty!" }
-      setCommonError(error);
+      updateError(error);
     }
     
   };
 
   const dealFloorCards = (dealingCards) => {
-    const prevCards = cards;
+    const prevCards = tableCards;
     for (let i = 0; i < 10; i++) {
       dealingCards[i].showFront = true;
       prevCards[i].push(dealingCards[i]);
     }
-    setCards(() => [...prevCards]);
+    setTableCards(() => [...prevCards]);
   };
+
+  
+    //If there is any empty chunk,dont deal floor cards
+    const emptyChunkExists = () => {
+      for (let i = 0; i < tableCards.length; i++) {
+          if (tableCards[i].length === 0)
+              return true
+      }
+      return false
+  }
+
   return (
     <>
       {[...Array(remainingCardClaim)].map((item, index) => (
@@ -59,7 +68,7 @@ const FloorCards = () => {
           className={classes.imageBox}
           src={spadesBack}
           alt='closedCard'
-          onClick={() => dealTheCards()}
+          onClick={() => dealCards()}
         />
       ))}
     </>

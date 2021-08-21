@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import Chunk from "../helpers/Chunk"
 import Game from "../helpers/Game"
 import CardValues from "../helpers/CardValues"
@@ -9,67 +9,98 @@ import { PreviousMovesContext } from './PreviousMovesContext';
 // Our Header Context
 export const GameContext = createContext();
 
+const correctMovePoint = 10;
+const setCompletedPoint = 100;
+const firstChunkSize = 6;
+const firstChunkQuantity = 4
+const secondChunkSize = 5;
+const secondChunkQuantity = 6;
+const decCount = 8;
+const tableCardsCount = 54;
+const floorCardsCount = 50;
+
+const FirstChunk = new Chunk(firstChunkSize, firstChunkQuantity);
+const SecondChunk = new Chunk(secondChunkSize, secondChunkQuantity);
+const GameState = new Game(CardValues, decCount, tableCardsCount, floorCardsCount, FirstChunk, SecondChunk);
+GameState.init()
+
 export const GameContextProvider = ({ children }) => {
-    const correctMovePoint = 10;
-    const setCompletedPoint= 100;
-    const [cards, setCards] = useState([]);
+
+    const [tableCards, setTableCards] = useState([]);
     const [floorCards, setFloorCards] = useState([]);
+
     const { updateCollectedSetsCount } = useContext(CompletedSetsContext);
     const { updateSore } = useContext(ScoreContext);
-    const { prevMoves,setPrevMove,addMove } = useContext(PreviousMovesContext)
+    const { prevMoves, setPrevMove, addMove } = useContext(PreviousMovesContext)
 
-    const FirstChunk= new Chunk(6,4);
-    const SecondChunk = new Chunk(5,6);
-    const GameState = new Game(CardValues,8,54,50,FirstChunk,SecondChunk);
-    GameState.init()
-    const scoreBoardRef = useRef();
 
     useEffect(() => {
-        setCards(GameState.tableCards);
+        setTableCards(GameState.tableCards);
         setFloorCards(GameState.floorCards);
-    }, [] );
+    }, []);
 
 
-    const addCardToBoard = (chunkIndex, cardIndex, droppedChunkIndex) => {
+    const makeMove = (movingCardIndex, movingChunkIndex, droppedChunkIndex) => {
+
+        if (moveItemsToDroppedChunk(movingCardIndex, movingChunkIndex, droppedChunkIndex)) {
+
+            //Update user score
+            updateSore(correctMovePoint);
+            //Check if there is any completed suits
+            checkIfThereIsAnyCompletedSets()
+
+        }
+
+    };
+    
+    const checkIfThereIsAnyCompletedSets = () => {
+        
+        if (setCompleted()) {
+            //Update user score
+            updateSore(setCompletedPoint);
+            //Increment collected decs count
+            updateCollectedSetsCount();
+        }
+    }
+
+    const moveItemsToDroppedChunk = (movingCardIndex, movingChunkIndex, droppedChunkIndex) => {
         let movingCards = [];
-        const updatedCards = [...cards];
-        let droppedChunkLength = cards[droppedChunkIndex].length;
+        const updatedCards = [...tableCards];
+        let droppedChunkLength = tableCards[droppedChunkIndex].length;
 
-        //If last card of the dropped chunk's next value is equal to first card of moving cards value,push items to dropped chunk
-        if (droppedChunkLength === 0 || (cards[chunkIndex][cardIndex].value === cards[droppedChunkIndex][droppedChunkLength - 1].nextValue)) {
+        //If dropping chunk is empty or last card of the dropped chunk's next value is equal to first card of moving cards value,push items to dropped chunk
+        if (droppedChunkLength === 0 || (tableCards[movingChunkIndex][movingCardIndex].value === tableCards[droppedChunkIndex][droppedChunkLength - 1].nextValue)) {
 
             //Set the move to moves state 
-            let movingChunkLength = cards[chunkIndex].length;
-            const movingItemsLength = movingChunkLength - cardIndex + 1
-            addMove(movingItemsLength, chunkIndex, droppedChunkIndex)
+            let movingChunkLength = tableCards[movingChunkIndex].length;
+            const movingItemsLength = movingChunkLength - movingCardIndex + 1
+            addMove(movingItemsLength, movingChunkIndex, droppedChunkIndex)
 
-            for (let i = cardIndex; i < movingChunkLength; i++) {
-                movingCards.push(cards[chunkIndex][i]);
+            for (let i = movingCardIndex; i < movingChunkLength; i++) {
+                movingCards.push(tableCards[movingChunkIndex][i]);
             }
             updatedCards[droppedChunkIndex].push(...movingCards);
 
             // Delete the dragged element from its original position.
-            updatedCards[chunkIndex].splice(cardIndex, movingCards.length);
+            updatedCards[movingChunkIndex].splice(movingCardIndex, movingCards.length);
 
             //Make last card of the movingChunk showFront true
-            if (updatedCards[chunkIndex].length > 0) {
-                updatedCards[chunkIndex][cardIndex - 1].showFront = true;
+            if (updatedCards[movingChunkIndex].length > 0) {
+                updatedCards[movingChunkIndex][movingCardIndex - 1].showFront = true;
             }
 
             //Update cards state
-            setCards(updatedCards);
+            setTableCards(updatedCards);
 
-            //Update user score
-            updateSore(correctMovePoint);
+            return true;
 
-            //Check if there is any completed suits
-            checkForCompletedDecs();
         }
+        return false;
     };
 
-    const checkForCompletedDecs = () => {
+    const setCompleted = () => {
         let counter = 0;
-        const playingCards = [...cards];
+        const playingCards = [...tableCards];
         for (let i = 0; i < playingCards.length; i++) {
             for (let k = 0; k < playingCards[i].length; k++) {
                 //If there is a card deck starts from 'A' check the cards under it 
@@ -95,17 +126,17 @@ export const GameContextProvider = ({ children }) => {
                         if (length > 0) {
                             playingCards[i][length - 1].showFront = true;
                         }
-                        setCards(playingCards);
-                        //Update user score
-                        updateSore(setCompletedPoint);
-                        //Increment collected decs count
-                        updateCollectedSetsCount();
+                        setTableCards(playingCards);
+
+                        return true;
+
                     } else {
                         counter = 0;
                     }
                 }
             }
         }
+        return false;
     };
 
     //When user clicked to revoke button,set state to prev state
@@ -115,34 +146,23 @@ export const GameContextProvider = ({ children }) => {
         if (prevStateArr.length > 0) {
             const lastMove = prevStateArr.pop()
             setPrevMove(prevStateArr)
-            const prevCards = [...cards]
+            const prevCards = [...tableCards]
             for (let i = 0; i < lastMove.itemLength; i++) {
                 prevCards[lastMove.movedChunkIndex].push(prevCards[lastMove.movingChunkIndex].pop())
             }
-            setCards(prevCards)
+            setTableCards(prevCards)
         }
-    }
-
-    //If there is any empty suit,dont deal floor cards
-    const emptySuitExists = () => {
-        for (let i = 0; i < cards.length; i++) {
-            if (cards[i].length === 0)
-                return true
-        }
-        return false
     }
 
     return (
         <GameContext.Provider
             value={{
-                cards,
+                tableCards,
                 floorCards,
-                setCards,
+                setTableCards,
                 setFloorCards,
-                addCardToBoard,
-                checkForCompletedDecs,
-                emptySuitExists,
-                scoreBoardRef
+                makeMove,
+                checkIfThereIsAnyCompletedSets,
             }}
         >
             {children}

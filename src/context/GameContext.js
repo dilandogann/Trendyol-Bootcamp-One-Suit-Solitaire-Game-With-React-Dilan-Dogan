@@ -16,6 +16,7 @@ export const GameContextProvider = ({ children }) => {
     const SecondChunk = new Chunk(5,6);
     const GameState = new Game(CardValues,8,54,50,FirstChunk,SecondChunk);
     GameState.init()
+    console.log(GameState.tableCards.length)
     const scoreBoardRef = useRef();
 
     useEffect(() => {

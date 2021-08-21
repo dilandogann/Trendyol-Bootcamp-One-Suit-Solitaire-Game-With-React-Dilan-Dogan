@@ -24,7 +24,7 @@ export default class Game {
         this.initializeGameDecs()
         this.shuffleGameDecs()
         this.createRandomTableCardIndexes();
-        this.initializeTableCardsFromRandomlyCreatedIndexes()
+        this.initializeTableCards()
         this.initializeFloorCards()
         this.chunkPlayingCards()
         this.showFrontSideOfLastCardsInChunks()
@@ -61,7 +61,7 @@ export default class Game {
         }
     };
 
-    initializeTableCardsFromRandomlyCreatedIndexes() {
+    initializeTableCards() {
 
         for (let i = 0; i < this.randomTableCardIndexes.length; i++)
             this.tableCards.push(this.cards[this.randomTableCardIndexes[i]]);

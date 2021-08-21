@@ -6,7 +6,7 @@ export const ScoreContextProvider = ({ children }) => {
 
     const [score, setScore] = useState(0);
 
-    const updateSore = (val) => {
+    const updateScore = (val) => {
         setScore(score + val);
     }
     return (
@@ -14,7 +14,7 @@ export const ScoreContextProvider = ({ children }) => {
             value={{
                 score,
                 setScore,
-                updateSore,
+                updateScore,
             }}
         >
             {children}

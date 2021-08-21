@@ -32,7 +32,7 @@ export const GameContextProvider = ({ children }) => {
     const [floorCards, setFloorCards] = useState([]);
 
     const { collectedSetsCount, updateCollectedSetsCount } = useContext(CompletedSetsContext);
-    const { setScore,updateSore } = useContext(ScoreContext);
+    const { setScore,updateScore } = useContext(ScoreContext);
     const { prevMoves, setPrevMove, addMove } = useContext(PreviousMovesContext)
     const { handleOpen } = useContext(GameFinishedContext);
     const { stopInterval, setMyInterval } = useContext(TimerContext);
@@ -55,7 +55,7 @@ export const GameContextProvider = ({ children }) => {
         if (moveItemsToDroppedChunk(movingCardIndex, movingChunkIndex, droppedChunkIndex)) {
 
             //Update user score
-            updateSore(correctMovePoint);
+            updateScore(correctMovePoint);
             //Check if there is any completed suits
             checkIfThereIsAnyCompletedSets()
             //Check ıf game completed
@@ -73,7 +73,7 @@ export const GameContextProvider = ({ children }) => {
 
         if (setCompleted()) {
             //Update user score
-            updateSore(setCompletedPoint);
+            updateScore(setCompletedPoint);
             //Increment collected decs count
             updateCollectedSetsCount();
         }

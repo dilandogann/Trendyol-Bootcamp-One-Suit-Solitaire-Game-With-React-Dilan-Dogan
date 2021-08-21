@@ -31,18 +31,18 @@ export const GameContextProvider = ({ children }) => {
     const [tableCards, setTableCards] = useState([]);
     const [floorCards, setFloorCards] = useState([]);
 
-    const { updateCollectedSetsCount } = useContext(CompletedSetsContext);
+    const { collectedSetsCount, updateCollectedSetsCount } = useContext(CompletedSetsContext);
     const { updateSore } = useContext(ScoreContext);
     const { prevMoves, setPrevMove, addMove } = useContext(PreviousMovesContext)
     const { handleOpen } = useContext(GameFinishedContext);
-    const { stopInterval,setMyInterval } = useContext(TimerContext);
+    const { stopInterval, setMyInterval } = useContext(TimerContext);
 
     useEffect(() => {
         setTableCards(GameState.tableCards);
         setFloorCards(GameState.floorCards);
     }, GameState.cards);
-    
-    const restartGame = () =>{
+
+    const restartGame = () => {
         GameState.restartGameState()
         GameState.init()
         stopInterval()
@@ -63,8 +63,10 @@ export const GameContextProvider = ({ children }) => {
     };
 
     const checkIfGameCompleted = () => {
+        if (collectedSetsCount === GameState.decCount) {
             stopInterval()
             handleOpen()
+        }
     }
     const checkIfThereIsAnyCompletedSets = () => {
 

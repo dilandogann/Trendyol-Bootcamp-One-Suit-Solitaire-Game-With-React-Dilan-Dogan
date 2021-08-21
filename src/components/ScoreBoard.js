@@ -1,14 +1,9 @@
 import { Typography } from '@material-ui/core';
-import React, { forwardRef, useState, useImperativeHandle } from 'react';
+import React, { forwardRef, useContext } from 'react';
+import { ScoreContext } from '../context/ScoreContext';
 
 const ScoreBoard = forwardRef((props, ref) => {
-  const [score, setScore] = useState(0);
-
-  useImperativeHandle(ref, () => ({
-    updateUserScore(addedScore) {
-      setScore(score + addedScore);
-    },
-  }));
+  const { score} = useContext(ScoreContext)
 
   return (
     <Typography variant='h5' display='inline'>

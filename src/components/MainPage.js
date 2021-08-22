@@ -9,6 +9,7 @@ import CommonContextWrapper from '../context/CommonContextWrapper';
 
 function MainPage() {
   const [open, setOpen] = useState(true);
+  
   return (
     <div className='app-background'>
       {open ? <>

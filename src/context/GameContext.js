@@ -32,8 +32,8 @@ export const GameContextProvider = ({ children }) => {
     const [tableCards, setTableCards] = useState([]);
     const [floorCards, setFloorCards] = useState([]);
 
-    const { collectedSetsCount, updateCollectedSetsCount,setCollectedSetsCount } = useContext(CompletedSetsContext);
-    const { setScore,updateScore } = useContext(ScoreContext);
+    const { collectedSetsCount, updateCollectedSetsCount, setCollectedSetsCount } = useContext(CompletedSetsContext);
+    const { setScore, updateScore } = useContext(ScoreContext);
     const { prevMoves, setPrevMove, addMove } = useContext(PreviousMovesContext)
     const { handleOpen } = useContext(GameFinishedContext);
     const { stopInterval, setMyInterval } = useContext(TimerContext);
@@ -50,6 +50,7 @@ export const GameContextProvider = ({ children }) => {
         setMyInterval()
         setScore(0)
         setCollectedSetsCount(0)
+        setPrevMove([])
     }
 
     const makeMove = (movingCardIndex, movingChunkIndex, droppedChunkIndex) => {
@@ -80,6 +81,7 @@ export const GameContextProvider = ({ children }) => {
             updateScore(setCompletedPoint);
             //Increment collected decs count
             updateCollectedSetsCount();
+            setPrevMove([])
         }
     }
 
@@ -93,8 +95,8 @@ export const GameContextProvider = ({ children }) => {
 
             //Set the move to moves state 
             let movingChunkLength = tableCards[movingChunkIndex].length;
-            const movingItemsLength = movingChunkLength - movingCardIndex 
-            
+            const movingItemsLength = movingChunkLength - movingCardIndex
+
 
             for (let i = movingCardIndex; i < movingChunkLength; i++) {
                 movingCards.push(tableCards[movingChunkIndex][i]);
@@ -107,10 +109,10 @@ export const GameContextProvider = ({ children }) => {
             //Make last card of the movingChunk showFront true
             if (updatedCards[movingChunkIndex].length > 0 && updatedCards[movingChunkIndex][movingCardIndex - 1].showFront === false) {
                 updatedCards[movingChunkIndex][movingCardIndex - 1].showFront = true;
-                addMove(movingItemsLength, movingChunkIndex, droppedChunkIndex,true)
+                addMove(movingItemsLength, movingChunkIndex, droppedChunkIndex, true, 'moving')
             }
-            else{
-                addMove(movingItemsLength, movingChunkIndex, droppedChunkIndex,false)
+            else {
+                addMove(movingItemsLength, movingChunkIndex, droppedChunkIndex, false, 'moving')
             }
             //Update cards state
             setTableCards(updatedCards);
@@ -171,17 +173,28 @@ export const GameContextProvider = ({ children }) => {
         const prevStateArr = [...prevMoves]
         if (prevStateArr.length > 0) {
             const lastMove = prevStateArr.pop()
-
             setPrevMove(prevStateArr)
             const prevCards = [...tableCards]
-            if(lastMove.showFront){
-                prevCards[lastMove.movingChunkIndex][prevCards[lastMove.movingChunkIndex].length-1].showFront = false
+
+            if (lastMove.moving === "moving") {  
+                if (lastMove.showFront) {
+                    prevCards[lastMove.movingChunkIndex][prevCards[lastMove.movingChunkIndex].length - 1].showFront = false
+                }
+                const droppedItems = prevCards[lastMove.movedChunkIndex].splice(prevCards[lastMove.movedChunkIndex].length - lastMove.movingItemsLength)
+                for (let i = 0; i < droppedItems.length; i++) {
+                    prevCards[lastMove.movingChunkIndex].push(droppedItems[i])
+                }
             }
-            const droppedItems=prevCards[lastMove.movedChunkIndex].splice(prevCards[lastMove.movedChunkIndex].length-lastMove.movingItemsLength)
-            for (let i = 0; i < droppedItems.length; i++) {
-                prevCards[lastMove.movingChunkIndex].push(droppedItems[i])
+            else{
+                const prevFloorCards = [...floorCards]
+                for(let i=0;i<prevCards.length;i++){
+                    const popedItem=prevCards[i].pop()
+                    prevFloorCards.push(popedItem)
+                }
+                setFloorCards(prevFloorCards)
             }
             setTableCards(prevCards)
+
         }
     }
 
@@ -190,7 +203,7 @@ export const GameContextProvider = ({ children }) => {
             value={{
                 tableCards,
                 floorCards,
-                chunkSize:FirstChunk.quantity+SecondChunk.quantity,
+                chunkSize: FirstChunk.quantity + SecondChunk.quantity,
                 setTableCards,
                 setFloorCards,
                 makeMove,

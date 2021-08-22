@@ -2,12 +2,14 @@ import React, { useContext, useState } from 'react';
 import spadesBack from '../assets/spades-back.png';
 import { CommonErrorContext } from '../context/CommonErrorContext';
 import { GameContext } from '../context/GameContext';
+import { PreviousMovesContext } from '../context/PreviousMovesContext';
 import { useStyles } from '../styles/styles.FloorCards';
 
 const FloorCards = () => {
   const classes = useStyles();
 
   const { tableCards, floorCards, setTableCards, setFloorCards, checkIfThereIsAnyCompletedSets,chunkSize } = useContext(GameContext);
+  const { addMove } = useContext(PreviousMovesContext)
   const { updateError } = useContext(CommonErrorContext);
   const [remainingCardClaim, setRemainingCardClaim] = useState(5);
 
@@ -22,6 +24,7 @@ const FloorCards = () => {
       setRemainingCardClaim(remainingCardClaim - 1);
       dealFloorCards(splicedCards);
       checkIfThereIsAnyCompletedSets()
+      addMove(0, 0, 0, false, 'dealing')
     }
     else {
       const error = { show: true, message: "You can not deal cards when a chunk empty!" }

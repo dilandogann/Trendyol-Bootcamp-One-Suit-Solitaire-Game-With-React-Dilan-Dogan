@@ -1,24 +1,15 @@
-import { Grid, makeStyles } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import React, { useContext } from 'react';
 import PlayingCard from './PlayingCard';
 import { v4 as uuidv4 } from 'uuid';
 import { GameContext } from '../context/GameContext';
-
-const useStyles = makeStyles((theme) => ({
-  container: {
-    marginTop: 150,
-    flexWrap: 'nowrap',
-    [theme.breakpoints.down('sm')]: {
-      marginTop: 100,
-    },
-  },
-}));
+import { useStyles } from '../styles/styles.GameDecs';
 
 const GameDecks = () => {
   const { tableCards} = useContext(GameContext);
   const classes = useStyles();
   return (
-    <Grid container className={classes.container}>
+    <Grid container className={classes.container} data-testid="">
       {tableCards.map((chunk, chunkIndex) => (
         <PlayingCard
           key={uuidv4()}

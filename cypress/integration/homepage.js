@@ -2,7 +2,7 @@ describe("renders the home page", () => {
 
     it("renders correctly", () => {
         cy.visit("/")
-        cy.get('.app-background')
+        cy.get('#myApp')
     })
     it("renders correctly", () => {
         cy.get('#header-text').should('have.text', 'Spider Solitare')
@@ -11,14 +11,7 @@ describe("renders the home page", () => {
         cy.get('.makeStyles-appBar-1').should('have.css', 'position').and('match', /fixed/)
     })
     it("renders correctly", () => {
-        cy.get('#restart-game-button').should('have.attr', 'disabled')
-    })
-
-    it("renders correctly", () => {
-        cy.get('#restart-game-button').should('have.attr', 'disabled')
-    })
-    it("renders correctly", () => {
-        cy.get('#new-game-button').should('have.text', 'New Game')
+        cy.get('#undo-move-button').should('have.attr', 'disabled')
     })
     it("renders correctly", () => {
         cy.get('#new-game-button').should('have.text', 'New Game')

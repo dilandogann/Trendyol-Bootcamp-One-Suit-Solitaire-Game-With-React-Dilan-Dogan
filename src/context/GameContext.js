@@ -20,6 +20,7 @@ const secondChunkQuantity = 6;
 const decCount = 8;
 const tableCardsCount = 54;
 const floorCardsCount = 50;
+const gameCompletedPoint = 200;
 
 const FirstChunk = new Chunk(firstChunkSize, firstChunkQuantity);
 const SecondChunk = new Chunk(secondChunkSize, secondChunkQuantity);
@@ -66,6 +67,8 @@ export const GameContextProvider = ({ children }) => {
 
     const checkIfGameCompleted = () => {
         if (collectedSetsCount === GameState.decCount) {
+            //Update user score
+            updateScore(gameCompletedPoint);
             stopInterval()
             handleOpen()
         }

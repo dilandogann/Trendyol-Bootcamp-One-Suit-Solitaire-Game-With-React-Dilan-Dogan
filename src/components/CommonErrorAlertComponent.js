@@ -27,7 +27,7 @@ export default function CommonErrorAlertComponent () {
     };
 
     return (
-        <div className={classes.root}>
+        <div className={classes.root} data-testid="error-modal">
             <Snackbar open={commonError.show} autoHideDuration={3000} onClose={handleClose} anchorOrigin={{vertical: 'top', horizontal: 'center'}}>
                 <Alert onClose={handleClose} severity="error">{commonError.message}</Alert>
             </Snackbar>

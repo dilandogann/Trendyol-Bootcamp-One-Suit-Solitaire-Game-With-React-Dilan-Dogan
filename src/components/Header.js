@@ -1,7 +1,6 @@
 import {
   AppBar,
   Avatar,
-  Button,
   Toolbar,
   Typography,
 } from '@material-ui/core';
@@ -11,7 +10,7 @@ import ScoreBoard from './ScoreBoard';
 import Timer from './Timer';
 import solitareLogo from '../assets/solitareLogo.jfif';
 import { useStyles } from '../styles/styles.Header';
-import UndoMoveButton from './UndoMove';
+import UndoMoveButton from './UndoMoveButton';
 import RestartGameButton from './RestartGameButton';
 
 const Header = () => {
@@ -24,7 +23,7 @@ const Header = () => {
       <Toolbar className={classes.toolbar}>
         <div className={classes.solitare}>
           <Avatar src={solitareLogo} className={classes.avatar} />
-          <Typography variant='h5' id="header-text">Spider Solitare</Typography>
+          <p id="header-text">Spider Solitare</p>
         </div>
         <div className={classes.timeScore}>
           <Timer />

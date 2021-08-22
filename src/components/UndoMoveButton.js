@@ -15,7 +15,8 @@ import {
     return (
           <div>
             <Button
-              id="restart-game-button"
+              testid="background"
+              id="undo-move-button"
               variant="contained"
               color="primary"
               className={classes.button}

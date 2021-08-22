@@ -5,6 +5,10 @@
   "engines": {
     "node": "15.x"
   },
+  "jest": {
+    "verbose": true,
+    "testEnvironment": "jsdom"
+  },
   "dependencies": {
     "@babel/core": "^7.15.0",
     "@babel/preset-env": "^7.15.0",
@@ -15,6 +19,7 @@
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
+    "jest-environment-jsdom-latest": "^26.6.2",
     "react": "^17.0.2",
     "react-dnd": "^14.0.3",
     "react-dnd-html5-backend": "^14.0.1",

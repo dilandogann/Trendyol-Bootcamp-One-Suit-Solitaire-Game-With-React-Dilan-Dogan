@@ -1,19 +1,11 @@
-import './App.css';
-import PlayGround from './components/PlayGround';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
-import Header from './components/Header';
-import GameFinished from './components/GameFinished';
+
 import React from 'react';
+import MainPage from './components/MainPage';
 
 function App() {
   return (
     <div className='app-background'>
-      <DndProvider backend={HTML5Backend}>
-        <Header />
-        <PlayGround />
-        <GameFinished/>
-      </DndProvider>
+      <MainPage />
     </div>
   );
 }

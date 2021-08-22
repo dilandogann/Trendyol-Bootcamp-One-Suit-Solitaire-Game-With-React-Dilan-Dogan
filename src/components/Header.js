@@ -11,12 +11,11 @@ import ScoreBoard from './ScoreBoard';
 import Timer from './Timer';
 import solitareLogo from '../assets/solitareLogo.jfif';
 import { useStyles } from '../styles/styles.Header';
-import UndoIcon from '@material-ui/icons/Undo';
-import { PreviousMovesContext } from '../context/PreviousMovesContext';
+import UndoMoveButton from './UndoMove';
+import RestartGameButton from './RestartGameButton';
 
 const Header = () => {
-  const { scoreBoardRef, restartGame, undoMove } = useContext(GameContext);
-  const { prevMoves } = useContext(PreviousMovesContext)
+  const { scoreBoardRef} = useContext(GameContext);
 
 
   const classes = useStyles();
@@ -27,27 +26,13 @@ const Header = () => {
           <Avatar src={solitareLogo} className={classes.avatar} />
           <Typography variant='h5' id="header-text">Spider Solitare</Typography>
         </div>
-
         <div className={classes.timeScore}>
           <Timer />
           <ScoreBoard ref={scoreBoardRef} />
         </div>
-        <div>
-          <Button
-            id="restart-game-button"
-            variant="contained"
-            color="primary"
-            className={classes.button}
-            startIcon={<UndoIcon />}
-            style={{ marginRight: '10px' }}
-            onClick={() => undoMove()}
-            disabled={prevMoves.length === 0}
-          >
-            Undo
-          </Button>
-          <Button id="new-game-button" color='secondary' variant='contained' onClick={() => restartGame()}>
-            New Game
-          </Button>
+        <div style={{display:'flex'}}>
+          <UndoMoveButton/>
+          <RestartGameButton/>
         </div>
       </Toolbar>
     </AppBar>

@@ -141,3 +141,27 @@ describe("should test init function", () => {
         expect(GameState.init()).toEqual(true);
     });
 })
+
+describe("should test restart game state", () => {
+
+    it('should make cards empty', () => {
+
+        GameState.restartGameState()
+        expect(GameState.cards).toHaveLength(0);
+    });
+    it('should make tableCards empty', () => {
+
+        GameState.restartGameState()
+        expect(GameState.tableCards).toHaveLength(0);
+    });
+    it('should make floorCards empty', () => {
+
+        GameState.restartGameState()
+        expect(GameState.floorCards).toHaveLength(0);
+    });
+    it('should make randomTableCardIndexes empty', () => {
+
+        GameState.restartGameState()
+        expect(GameState.randomTableCardIndexes).toHaveLength(0);
+    });
+})

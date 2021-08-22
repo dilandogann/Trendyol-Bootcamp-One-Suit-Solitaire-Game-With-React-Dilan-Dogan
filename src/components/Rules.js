@@ -63,13 +63,20 @@ export default function Rules({open,setOpen}) {
               You cannot drag an item unless it is the last element or it is in an ordered card list.
             </Typography>
             <Typography
-            className={classes.rule}
+              className={classes.rule}
               align='left'
               gutterBottom
               id='transition-modal-description'
             >
             You must collect 8 sorted card list from A to K in order to win the game.
-            <Typography align='center'>GOOD LUCK !</Typography>
+            </Typography>
+            <Typography
+              className={classes.rule}
+              align='center'
+              gutterBottom
+              id='transition-modal-description'
+            >
+            GOOD LUCK !
             </Typography>
             <Button variant='contained' color='secondary' onClick={handleClose}>
               Let's Play

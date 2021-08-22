@@ -94,7 +94,7 @@ export const GameContextProvider = ({ children }) => {
             //Set the move to moves state 
             let movingChunkLength = tableCards[movingChunkIndex].length;
             const movingItemsLength = movingChunkLength - movingCardIndex 
-            addMove(movingItemsLength, movingChunkIndex, droppedChunkIndex)
+            
 
             for (let i = movingCardIndex; i < movingChunkLength; i++) {
                 movingCards.push(tableCards[movingChunkIndex][i]);
@@ -105,8 +105,12 @@ export const GameContextProvider = ({ children }) => {
             updatedCards[movingChunkIndex].splice(movingCardIndex, movingCards.length);
 
             //Make last card of the movingChunk showFront true
-            if (updatedCards[movingChunkIndex].length > 0) {
+            if (updatedCards[movingChunkIndex].length > 0 && updatedCards[movingChunkIndex][movingCardIndex - 1].showFront === false) {
                 updatedCards[movingChunkIndex][movingCardIndex - 1].showFront = true;
+                addMove(movingItemsLength, movingChunkIndex, droppedChunkIndex,true)
+            }
+            else{
+                addMove(movingItemsLength, movingChunkIndex, droppedChunkIndex,false)
             }
             //Update cards state
             setTableCards(updatedCards);
@@ -170,11 +174,12 @@ export const GameContextProvider = ({ children }) => {
 
             setPrevMove(prevStateArr)
             const prevCards = [...tableCards]
-            if(!prevCards[lastMove.movingChunkIndex][prevCards[lastMove.movingChunkIndex].length-2].showFront){
+            if(lastMove.showFront){
                 prevCards[lastMove.movingChunkIndex][prevCards[lastMove.movingChunkIndex].length-1].showFront = false
             }
-            for (let i = 0; i < lastMove.movingItemsLength; i++) {
-                prevCards[lastMove.movingChunkIndex].push(prevCards[lastMove.movedChunkIndex].pop())
+            const droppedItems=prevCards[lastMove.movedChunkIndex].splice(prevCards[lastMove.movedChunkIndex].length-lastMove.movingItemsLength)
+            for (let i = 0; i < droppedItems.length; i++) {
+                prevCards[lastMove.movingChunkIndex].push(droppedItems[i])
             }
             setTableCards(prevCards)
         }

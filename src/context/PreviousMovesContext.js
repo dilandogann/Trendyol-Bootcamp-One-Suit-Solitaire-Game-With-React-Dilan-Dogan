@@ -6,9 +6,9 @@ export const PreviousMovesContextProvider = ({ children }) => {
 
     const [prevMoves, setPrevMove] = useState([]);
 
-    const addMove = (movingItemsLength, movingChunkIndex, movedChunkIndex) => {
+    const addMove = (movingItemsLength, movingChunkIndex, movedChunkIndex,showFront) => {
         const prevStateArr = [...prevMoves]
-        const move = { movingItemsLength: movingItemsLength, movedChunkIndex: movedChunkIndex, movingChunkIndex: movingChunkIndex }
+        const move = { movingItemsLength: movingItemsLength, movedChunkIndex: movedChunkIndex, movingChunkIndex: movingChunkIndex ,showFront:showFront}
         prevStateArr.push(move)
         setPrevMove(prevStateArr)
     }

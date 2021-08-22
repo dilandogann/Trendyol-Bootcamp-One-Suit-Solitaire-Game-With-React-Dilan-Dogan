@@ -8,7 +8,7 @@ import React from 'react';
 
 function App() {
   return (
-    <div className='green-table'>
+    <div className='app-background'>
       <DndProvider backend={HTML5Backend}>
         <Header />
         <PlayGround />

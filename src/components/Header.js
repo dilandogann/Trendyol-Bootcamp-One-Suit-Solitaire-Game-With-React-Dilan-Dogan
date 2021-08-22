@@ -25,7 +25,7 @@ const Header = () => {
       <Toolbar className={classes.toolbar}>
         <div className={classes.solitare}>
           <Avatar src={solitareLogo} className={classes.avatar} />
-          <Typography variant='h5'>Spider Solitare</Typography>
+          <Typography variant='h5' id="header-text">Spider Solitare</Typography>
         </div>
 
         <div className={classes.timeScore}>
@@ -34,6 +34,7 @@ const Header = () => {
         </div>
         <div>
           <Button
+            id="restart-game-button"
             variant="contained"
             color="primary"
             className={classes.button}
@@ -44,7 +45,7 @@ const Header = () => {
           >
             Undo
           </Button>
-          <Button color='secondary' variant='contained' onClick={() => restartGame()}>
+          <Button id="new-game-button" color='secondary' variant='contained' onClick={() => restartGame()}>
             New Game
           </Button>
         </div>

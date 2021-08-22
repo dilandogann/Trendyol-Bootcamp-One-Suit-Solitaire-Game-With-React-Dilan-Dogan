@@ -31,7 +31,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "jest",
+    "test": "cypress open",
     "test:coverage": "jest --coverage",
     "eject": "react-scripts eject"
   },

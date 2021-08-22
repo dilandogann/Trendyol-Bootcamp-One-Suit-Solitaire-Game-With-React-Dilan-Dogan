@@ -12,10 +12,11 @@ import RestartGameButton from '../components/RestartGameButton';
 import { GameContext } from '../context/GameContext';
 
 describe('Button', () => {
-    const restartGame = () => console.log("dilan");
+    const restartGame = () => console.log("restart button clicked");
 
     it('renders without crashing', () => {
-        const component = render(<GameContext.Provider value={restartGame}>
+        const component =
+         render(<GameContext.Provider value={restartGame}>
             <RestartGameButton />
         </GameContext.Provider>);
 

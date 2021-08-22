@@ -12,6 +12,7 @@ import { TimerContext } from './TimerContext';
 export const GameContext = createContext();
 
 const correctMovePoint = 10;
+const undoPoint = -10;
 const setCompletedPoint = 100;
 const firstChunkSize = 6;
 const firstChunkQuantity = 4
@@ -176,7 +177,7 @@ export const GameContextProvider = ({ children }) => {
             setPrevMove(prevStateArr)
             const prevCards = [...tableCards]
 
-            if (lastMove.moving === "moving") {  
+            if (lastMove.moving === "moving") {
                 if (lastMove.showFront) {
                     prevCards[lastMove.movingChunkIndex][prevCards[lastMove.movingChunkIndex].length - 1].showFront = false
                 }
@@ -184,17 +185,17 @@ export const GameContextProvider = ({ children }) => {
                 for (let i = 0; i < droppedItems.length; i++) {
                     prevCards[lastMove.movingChunkIndex].push(droppedItems[i])
                 }
+                updateScore(undoPoint)
             }
-            else{
+            else {
                 const prevFloorCards = [...floorCards]
-                for(let i=0;i<prevCards.length;i++){
-                    const popedItem=prevCards[i].pop()
+                for (let i = 0; i < prevCards.length; i++) {
+                    const popedItem = prevCards[i].pop()
                     prevFloorCards.push(popedItem)
                 }
                 setFloorCards(prevFloorCards)
             }
             setTableCards(prevCards)
-
         }
     }
 

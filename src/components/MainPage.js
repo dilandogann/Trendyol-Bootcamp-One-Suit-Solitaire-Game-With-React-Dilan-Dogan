@@ -11,7 +11,7 @@ function MainPage() {
   const [open, setOpen] = useState(true);
   
   return (
-    <div className='app-background'>
+    <div className='app-background' id="myApp">
       {open ? <>
         <Rules open={open} setOpen={setOpen} />
       </>

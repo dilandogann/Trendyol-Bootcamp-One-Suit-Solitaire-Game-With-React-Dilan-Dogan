@@ -14,8 +14,6 @@ import UndoMoveButton from './UndoMoveButton';
 import RestartGameButton from './RestartGameButton';
 
 const Header = () => {
-  const { scoreBoardRef} = useContext(GameContext);
-
 
   const classes = useStyles();
   return (
@@ -27,7 +25,7 @@ const Header = () => {
         </div>
         <div className={classes.timeScore}>
           <Timer />
-          <ScoreBoard ref={scoreBoardRef} />
+          <ScoreBoard />
         </div>
         <div style={{display:'flex'}}>
           <UndoMoveButton/>

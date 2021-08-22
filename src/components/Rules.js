@@ -49,7 +49,7 @@ export default function Rules({open,setOpen}) {
             className={classes.rule}
               align='left'
               gutterBottom
-              id='transition-modal-description'
+              id='transition-modal-description-second'
             >
               This is a Reversed Spider Solitare game which means the cards
               should be sorted from{' '}
@@ -58,7 +58,7 @@ export default function Rules({open,setOpen}) {
             <Typography
               align='left'
               gutterBottom
-              id='transition-modal-description'
+              id='transition-modal-description-first-rule'
             >
               You cannot drag an item unless it is the last element or it is in an ordered card list.
             </Typography>
@@ -66,7 +66,7 @@ export default function Rules({open,setOpen}) {
               className={classes.rule}
               align='left'
               gutterBottom
-              id='transition-modal-description'
+              id='transition-modal-description-second-rule'
             >
             You must collect 8 sorted card list from A to K in order to win the game.
             </Typography>
@@ -78,7 +78,7 @@ export default function Rules({open,setOpen}) {
             >
             GOOD LUCK !
             </Typography>
-            <Button variant='contained' color='secondary' onClick={handleClose}>
+            <Button variant='contained' color='secondary' onClick={handleClose} id="lets-play-button">
               Let's Play
             </Button>
           </div>

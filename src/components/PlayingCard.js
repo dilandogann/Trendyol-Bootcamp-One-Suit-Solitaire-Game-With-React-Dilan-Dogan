@@ -73,7 +73,7 @@ const PlayingCard = ({ chunk, chunkIndex }) => {
           className={classes.container}
           ref={drop}
         >
-          <PlaceHolder />
+          <PlaceHolder empty/>
         </Grid>}
     </Grid>
   );

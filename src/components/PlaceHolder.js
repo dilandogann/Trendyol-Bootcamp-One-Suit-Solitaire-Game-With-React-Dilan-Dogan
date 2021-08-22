@@ -1,14 +1,19 @@
-
 import { useStyles } from '../styles/styles.PlaceHolder';
 
-const PlaceHolder = () => {
-    const classes = useStyles();
+const PlaceHolder = ({ empty }) => {
+  const classes = useStyles();
 
-    return(
-        <>
-            <div className={classes.placeholder}></div>
-          </>
-    );
-}
+  return (
+    <>
+      <div
+        className={
+          empty
+            ? `${classes.placeholder} ${classes.emptyPlaceholder}`
+            : classes.placeholder
+        }
+      ></div>
+    </>
+  );
+};
 
 export default PlaceHolder;

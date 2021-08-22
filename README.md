@@ -20,5 +20,5 @@ After cloning the project, open it in visual studio code program
 
 ```
 npm install
-npm run serve
+npm start
  ```

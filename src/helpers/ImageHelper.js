@@ -1,18 +1,18 @@
 
-import spadesTwo from '../assets/spades-two.png';
-import spadesThree from '../assets/spades-three.png';
-import spadesFour from '../assets/spades-four.png';
-import spadesFive from '../assets/spades-five.png';
-import spadesSix from '../assets/spades-six.png';
-import spadesSeven from '../assets/spades-seven.png';
-import spadesEight from '../assets/spades-eight.png';
-import spadesNine from '../assets/spades-nine.png';
-import spadesTen from '../assets/spades-ten.png';
-import spadesJoker from '../assets/spades-joker.png';
-import spadesQueen from '../assets/spades-queen.png';
-import spadesKing from '../assets/spades-king.png';
-import spadesAce from '../assets/spades-ace.png';
-import spadesBack from '../assets/spades-back.png';
+import spadesTwo from '../assets/spades-two-min.png';
+import spadesThree from '../assets/spades-three-min.png';
+import spadesFour from '../assets/spades-four-min.png';
+import spadesFive from '../assets/spades-five-min.png';
+import spadesSix from '../assets/spades-six-min.png';
+import spadesSeven from '../assets/spades-seven-min.png';
+import spadesEight from '../assets/spades-eight-min.png';
+import spadesNine from '../assets/spades-nine-min.png';
+import spadesTen from '../assets/spades-ten-min.png';
+import spadesJoker from '../assets/spades-joker-min.png';
+import spadesQueen from '../assets/spades-queen-min.png';
+import spadesKing from '../assets/spades-king-min.png';
+import spadesAce from '../assets/spades-ace-min.png';
+import spadesBack from '../assets/spades-back-min.png';
 
 function ImageHelper  (cardValue)  {
     switch (cardValue) {

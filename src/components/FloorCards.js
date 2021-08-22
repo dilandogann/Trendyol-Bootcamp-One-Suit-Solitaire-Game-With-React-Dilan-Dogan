@@ -1,9 +1,9 @@
 import React, { useContext, useState } from 'react';
-import spadesBack from '../assets/spades-back.png';
 import { CommonErrorContext } from '../context/CommonErrorContext';
 import { GameContext } from '../context/GameContext';
 import { PreviousMovesContext } from '../context/PreviousMovesContext';
 import { useStyles } from '../styles/styles.FloorCards';
+import { ImageHelper }from '../helpers/ImageHelper'
 
 const FloorCards = () => {
   const classes = useStyles();
@@ -58,7 +58,7 @@ const FloorCards = () => {
         <img
           key={index}
           className={classes.imageBox}
-          src={spadesBack}
+          src={ImageHelper()}
           alt='closedCard'
           onClick={() => dealCards()}
         />

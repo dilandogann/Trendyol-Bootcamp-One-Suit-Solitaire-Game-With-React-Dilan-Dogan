@@ -1,8 +1,15 @@
 # Trendyol-Bootcamp-One-Suit-Solitaire-Game-With-React
 
-## Try Project Demo
+## Try Project Demo With Drag and Drop Option
 
-[Spider Solitaire](https://spider-solitare-react.herokuapp.com/)
+[Reversed Spider Solitaire with React](https://spider-solitare-react.herokuapp.com/)
+
+
+
+
+#### Also here is another version that plays by clicking and is developed with vuejs
+
+[Reversed Spider Solitaire with Vue](https://trendyol-bootcamp-solitaire.herokuapp.com/)
 
 
 ## İnstallation

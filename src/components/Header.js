@@ -2,10 +2,8 @@ import {
   AppBar,
   Avatar,
   Toolbar,
-  Typography,
 } from '@material-ui/core';
-import React, { useContext } from 'react';
-import { GameContext } from '../context/GameContext';
+import React  from 'react';
 import ScoreBoard from './ScoreBoard';
 import Timer from './Timer';
 import solitareLogo from '../assets/solitareLogo.jfif';
@@ -16,6 +14,7 @@ import RestartGameButton from './RestartGameButton';
 const Header = () => {
 
   const classes = useStyles();
+  
   return (
     <AppBar position='fixed' elevation={3} className={classes.appBar}>
       <Toolbar className={classes.toolbar}>
@@ -23,7 +22,7 @@ const Header = () => {
           <Avatar src={solitareLogo} className={classes.avatar} />
           <p id="header-text">Spider Solitare</p>
         </div>
-        <div className={classes.timeScore}>
+        <div className={classes.timeScoreContainer}>
           <Timer />
           <ScoreBoard />
         </div>

@@ -15,7 +15,7 @@ const CollectedSets = () => {
         (
           <img className={classes.image} key={index} src={ImageHelper('K')} alt='closedCard'/>
         ) : (
-          <PlaceHolder key={index}/>
+          <PlaceHolder key={index} className={classes.image}/>
         )
       ))}
     </>

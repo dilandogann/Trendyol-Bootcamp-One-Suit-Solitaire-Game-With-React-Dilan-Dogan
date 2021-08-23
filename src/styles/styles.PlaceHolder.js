@@ -14,13 +14,13 @@ export const useStyles = makeStyles((theme) => ({
         marginTop: 20,
       },
       [theme.breakpoints.down('sm')]: {
-        width: 40,
-        height: 70,
+        width: 65,
+        height: 105,
         marginTop: 20,
       },
       [theme.breakpoints.down('xs')]: {
-        width: 30,
-        height: 50,
+        width: 45,
+        height: 80,
         marginTop: 20,
       },
     },
@@ -39,8 +39,8 @@ export const useStyles = makeStyles((theme) => ({
       },
       [theme.breakpoints.down('xs')]: {
         marginTop: -15,
-        width: 25,
-        height: 40,
+        width: 30,
+        height: 80,
       },
     },
   }));

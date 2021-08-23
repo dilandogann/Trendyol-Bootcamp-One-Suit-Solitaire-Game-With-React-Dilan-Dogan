@@ -56,7 +56,7 @@ const PlayingCard = ({ chunk, chunkIndex }) => {
         ref={drop}
       >
         {chunk.map((card, cardIndex) => (
-          <Grid item key={card.id}>
+          <Grid item key={card.id} xs={12}>
             <Single
               card={card}
               chunkIndex={chunkIndex}

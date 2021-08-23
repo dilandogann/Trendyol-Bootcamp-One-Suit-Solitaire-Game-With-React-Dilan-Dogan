@@ -16,7 +16,8 @@ export const useStyles = makeStyles((theme) => ({
         width: '120%',
       },
       [theme.breakpoints.down('xs')]: {
-        width: '140%',
+        width: '300%',
+        height:80
       },
     },
     showFront: {
@@ -39,7 +40,8 @@ export const useStyles = makeStyles((theme) => ({
         width: '120%',
       },
       [theme.breakpoints.down('xs')]: {
-        width: '140%',
+        width: '300%',
+        height:80
       },
     },
   }));

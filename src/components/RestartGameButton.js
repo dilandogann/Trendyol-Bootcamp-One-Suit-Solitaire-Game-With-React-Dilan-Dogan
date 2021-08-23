@@ -4,16 +4,18 @@ import {
 } from '@material-ui/core';
 import React, { useContext } from 'react';
 import { GameContext } from '../context/GameContext';
+import { useStyles } from '../styles/styles.NewGameButton';
 
 const RestartGameButton = () => {
     const { restartGame } = useContext(GameContext);
+    const classes = useStyles();
 
     return (
-        <div>
-            <Button id="new-game-button" color='secondary' variant='contained' onClick={() => restartGame()}>
+        <container>
+            <Button className={classes.newGameButton} id="new-game-button" color='secondary' variant='contained' onClick={() => restartGame()}>
                 New Game
             </Button>
-        </div>
+        </container>
     );
 };
 

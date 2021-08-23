@@ -20,7 +20,7 @@ export const useStyles = makeStyles((theme) => ({
     },
     collectedDecsGrid: {
       display: 'flex',
-      // marginLeft: 'auto',
+     // marginLeft: 'auto',
       flexWrap: 'no-wrap',
       [theme.breakpoints.up('md')]: {
         marginLeft: 'auto',

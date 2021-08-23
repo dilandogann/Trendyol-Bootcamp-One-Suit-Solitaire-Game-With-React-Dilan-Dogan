@@ -11,5 +11,9 @@ export const useStyles = makeStyles((theme) => ({
       [theme.breakpoints.down('md')]: {
           width: '75px',
         },
+      [theme.breakpoints.down('xs')]: {
+          width: '60px',
+          height: '80px',
+        }, 
     },
   }));

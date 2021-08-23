@@ -14,8 +14,10 @@ export default function Rules({open,setOpen}) {
   };
 
   return (
-    <div>
+    <div maxWidth='lg'>
       <Modal
+        xs={12}
+        md={12}
         aria-labelledby='transition-modal-title'
         aria-describedby='transition-modal-description'
         className={classes.modal}

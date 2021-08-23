@@ -3,7 +3,7 @@ import {
   } from '@material-ui/core';
   import React, { useContext } from 'react';
   import { GameContext } from '../context/GameContext';
-  import { useStyles } from '../styles/styles.Header';
+  import { useStyles } from '../styles/styles.UndoButton';
   import UndoIcon from '@material-ui/icons/Undo';
   import { PreviousMovesContext } from '../context/PreviousMovesContext';
   
@@ -19,7 +19,7 @@ import {
               id="undo-move-button"
               variant="contained"
               color="primary"
-              className={classes.button}
+              className={classes.undoButton}
               startIcon={<UndoIcon />}
               style={{ marginRight: '10px' }}
               onClick={() => undoMove()}

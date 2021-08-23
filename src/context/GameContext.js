@@ -33,10 +33,10 @@ export const GameContextProvider = ({ children }) => {
     const [tableCards, setTableCards] = useState([]);
     const [floorCards, setFloorCards] = useState([]);
 
-    const { collectedSetsCount, updateCollectedSetsCount, setCollectedSetsCount } = useContext(CompletedSetsContext);
+    const { collectedCount, setCollectedSetCount, updateCollectedSetsCount } = useContext(CompletedSetsContext);
     const { setScore, updateScore } = useContext(ScoreContext);
     const { prevMoves, setPrevMove, addMove } = useContext(PreviousMovesContext)
-    const { handleOpen } = useContext(GameFinishedContext);
+    const { setOpen } = useContext(GameFinishedContext);
     const { stopInterval, setMyInterval } = useContext(TimerContext);
 
     useEffect(() => {
@@ -50,7 +50,8 @@ export const GameContextProvider = ({ children }) => {
         stopInterval()
         setMyInterval()
         setScore(0)
-        setCollectedSetsCount(0)
+        collectedCount.current = 0
+        setCollectedSetCount(0)
         setPrevMove([])
     }
 
@@ -62,17 +63,18 @@ export const GameContextProvider = ({ children }) => {
             updateScore(correctMovePoint);
             //Check if there is any completed suits
             checkIfThereIsAnyCompletedSets()
-            //Check ıf game completed
-            checkIfGameCompleted()
+
         }
     };
 
     const checkIfGameCompleted = () => {
-        if (collectedSetsCount === GameState.decCount) {
+        if (collectedCount.current === GameState.decCount) {
             //Update user score
             updateScore(gameCompletedPoint);
+            //Stop timer
             stopInterval()
-            handleOpen()
+            //Open modal
+            setOpen(true)
         }
     }
     const checkIfThereIsAnyCompletedSets = () => {
@@ -82,8 +84,14 @@ export const GameContextProvider = ({ children }) => {
             updateScore(setCompletedPoint);
             //Increment collected decs count
             updateCollectedSetsCount();
+            //Update user score
+            updateScore(setCompletedPoint);
+            //Set prev moves to empty
             setPrevMove([])
+            //Check ıf game completed
+            checkIfGameCompleted()
         }
+
     }
 
     const moveItemsToDroppedChunk = (movingCardIndex, movingChunkIndex, droppedChunkIndex) => {

@@ -5,13 +5,13 @@ import { CompletedSetsContext } from '../context/CompletedSetsContext';
 import { useStyles } from '../styles/styles.CollectedDesc';
 
 const CollectedSets = () => {
-  const { collectedSetsCount } = useContext(CompletedSetsContext);
+  const { collectedSetCount } = useContext(CompletedSetsContext);
   const classes = useStyles();
 
   return (
     <>
       {[...Array(8)].map((item, index) => (
-        index < collectedSetsCount ? 
+        index < collectedSetCount ? 
         (
           <img className={classes.image} key={index} src={ImageHelper('K')} alt='closedCard'/>
         ) : (

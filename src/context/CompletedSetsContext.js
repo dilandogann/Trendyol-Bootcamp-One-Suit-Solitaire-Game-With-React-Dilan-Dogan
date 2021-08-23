@@ -1,21 +1,25 @@
-import React, { createContext, useState} from 'react';
+import React, { createContext, useRef, useState } from 'react';
 
 export const CompletedSetsContext = createContext();
+const updateCount = 1
 
 export const CompletedSetsContextProvider = ({ children }) => {
 
-    const [collectedSetsCount, setCollectedSetsCount] = useState(0);
-    const updateCount=1
+    const collectedCount = useRef(0)
+    const [collectedSetCount,setCollectedSetCount] = useState(0);
 
     const updateCollectedSetsCount = () => {
-        setCollectedSetsCount(collectedSetsCount + updateCount);
+        const nextCount = collectedCount.current+updateCount
+        collectedCount.current=nextCount
+        setCollectedSetCount(collectedCount.current)
     }
     return (
         <CompletedSetsContext.Provider
             value={{
-                collectedSetsCount,
+                collectedCount,
+                collectedSetCount,
+                setCollectedSetCount,
                 updateCollectedSetsCount,
-                setCollectedSetsCount
             }}
         >
             {children}

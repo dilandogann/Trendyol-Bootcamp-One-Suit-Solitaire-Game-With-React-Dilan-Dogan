@@ -11,11 +11,9 @@ const RestartGameButton = () => {
     const classes = useStyles();
 
     return (
-        <container>
             <Button className={classes.newGameButton} id="new-game-button" color='secondary' variant='contained' onClick={() => restartGame()}>
                 New Game
             </Button>
-        </container>
     );
 };
 

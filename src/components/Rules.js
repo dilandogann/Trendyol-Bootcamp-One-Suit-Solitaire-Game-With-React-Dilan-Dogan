@@ -14,7 +14,7 @@ export default function Rules({open,setOpen}) {
   };
 
   return (
-    <div maxWidth='lg'>
+    <div>
       <Modal
         xs={12}
         md={12}

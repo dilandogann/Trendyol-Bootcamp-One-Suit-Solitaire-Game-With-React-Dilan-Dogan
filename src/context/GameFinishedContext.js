@@ -19,6 +19,7 @@ export const GameFinishedContextProvider = ({ children }) => {
             value={{
                 open,
                 handleOpen,
+                setOpen,
                 handleClose
             }}
         >
